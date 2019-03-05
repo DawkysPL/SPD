@@ -1,0 +1,7 @@
+C:\Users\micha\Desktop\SPD_TUTAJ\Zad1\SPD1\SPD1\bin\Debug\SPD1.exe.config
+C:\Users\micha\Desktop\SPD_TUTAJ\Zad1\SPD1\SPD1\bin\Debug\SPD1.exe
+C:\Users\micha\Desktop\SPD_TUTAJ\Zad1\SPD1\SPD1\bin\Debug\SPD1.pdb
+C:\Users\micha\Desktop\SPD_TUTAJ\Zad1\SPD1\SPD1\obj\Debug\SPD1.csprojAssemblyReference.cache
+C:\Users\micha\Desktop\SPD_TUTAJ\Zad1\SPD1\SPD1\obj\Debug\SPD1.csproj.CoreCompileInputs.cache
+C:\Users\micha\Desktop\SPD_TUTAJ\Zad1\SPD1\SPD1\obj\Debug\SPD1.exe
+C:\Users\micha\Desktop\SPD_TUTAJ\Zad1\SPD1\SPD1\obj\Debug\SPD1.pdb
