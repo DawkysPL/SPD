@@ -19,7 +19,7 @@ namespace SPD1
 
             //poprawny podzial czasu na dane zadania
             WczytajDaneDoMaszyn(Maszyny,text);
-            Algorytmy.Permutacje(3,Maszyny);
+            Algorytmy.przegladZupelny(Maszyny);
             Console.ReadLine();
         }
         #region MyLoadFunctions

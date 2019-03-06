@@ -33,8 +33,9 @@ namespace SPD1
 4. Odbijamy lustrzanie szereg elementów od indeksu i+1 do końca szeregu.
    Otrzymamy szereg: 1 4 6 2 9 7 3 5 8. Wyznaczony szereg jest szukanym
    przez nas rozwiązaniem. */
-        public static void Permutacje(int liczbaZadan, List<Maszyna> Maszyny)
-        {
+        public static List<int[]> Permutacje(int liczbaZadan)
+        {   
+            List<int[]> calaTablicaPermutacji = new List<int[]>();
             int[] tablicaPermutacji = new int[liczbaZadan];
             for (int i = 0; i < liczbaZadan; i++)
             {
@@ -47,7 +48,7 @@ namespace SPD1
 
                 if (liczbaZadan < 2)
                 {
-                    return;
+                    return calaTablicaPermutacji;
                 }
 
                 i = liczbaZadan - 1;
@@ -82,9 +83,28 @@ namespace SPD1
                     tablicaPermutacji[i - 1] = tablicaPermutacji[j - 1];
                     tablicaPermutacji[j - 1] = k;
                 }
+                calaTablicaPermutacji.Add(tablicaPermutacji);
             }
+            return calaTablicaPermutacji;
         }
 
-
+        public static void przegladZupelny(List<Maszyna> Maszyny)
+        {
+            List<int[]> tablicaPermutacjiZadan = Permutacje(Maszyna.liczbaZadan);
+            List<TimeWithTask> tablicaCzasow = new List<TimeWithTask>();
+            int czasM2 = 0, czasM3 = 0;                                       //to mozesz usunac jak masz inny pomysl
+            foreach (var tablicaZadan in tablicaPermutacjiZadan)  
+            {
+                for (int index = 0; index < tablicaZadan.Length; index++)
+                {
+                    if(czasM2 == 0)
+                    czasM2 += Math.Max(Maszyny[0].TimeWithTask[tablicaZadan[index]].Time,0);
+                    else
+                    {
+                        
+                    }
+                }
+            }
+        }
     }
 }
