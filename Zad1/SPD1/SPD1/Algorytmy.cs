@@ -88,7 +88,7 @@ namespace SPD1
             return calaTablicaPermutacji;
         }
 
-        public static void przegladZupelny(List<Maszyna> Maszyny)
+       /* public static void przegladZupelny(List<Maszyna> Maszyny)
         {
             List<int[]> tablicaPermutacjiZadan = Permutacje(Maszyna.liczbaZadan);
             List<TimeWithTask> tablicaCzasow = new List<TimeWithTask>();
@@ -106,5 +106,119 @@ namespace SPD1
                 }
             }
         }
+        */
+        public static void chooseOptimalPermutationForTwoMachine(List<Maszyna> Maszyny, int[] tableOfPermutation)
+        {
+            int[] table = new int[3]; // numer maszyny, numer zadania, najmniejsza wartosc
+            int[] helpTable = new int[3];
+            List<int[]> HelpList = new List<int[]>();
+            for(int i = 0; i < Maszyna.liczbaZadan; i++)
+            {
+                if(Maszyny[0].TimeWithTask[i].Time <= Maszyny[1].TimeWithTask[i].Time)
+                {
+                    HelpList.Add(new int[]{0,0,0});
+                HelpList[i][0] = 1;
+                HelpList[i][1] = i;
+                HelpList[i][2] = Maszyny[0].TimeWithTask[i].Time;
+                    
+                }
+                else
+                {
+            HelpList.Add(new int[]{0,0,0});
+                HelpList[i][0] = 2;
+                HelpList[i][1] = i;
+                HelpList[i][2] = Maszyny[1].TimeWithTask[i].Time;
+                }
+            }
+            for(int i = 0; i < (Maszyna.liczbaZadan -1); i++)// sortowanie bąbelkowe
+            {
+                for(int j = 0; j < (Maszyna.liczbaZadan - 1); j++)
+                {
+                    if(HelpList[j][2] > HelpList[j + 1][2])
+                    {
+                       helpTable = HelpList[j];
+                       HelpList[j] = HelpList[j+1];
+                       HelpList[j+1] = helpTable;
+                    }
+
+                }
+            }
+            for(int i = 0, j = (Maszyna.liczbaZadan - 1), k = 0; i <= j; k++)
+            {
+                if(HelpList[k][0] == 1)
+                {
+                tableOfPermutation[i] = HelpList[k][1]; 
+                    ++i;
+                }
+                else if(HelpList[k][0] == 2)
+                {
+                 tableOfPermutation[j] = HelpList[k][1]; 
+                    --j;
+                }
+            }
+        }
+
+        public static void calculateCMax(List<Maszyna> Maszyny, int[] tableOfPermutation)
+        {
+            //List<int> listOfMaschineTimes = new List<int>();
+            int[,] listAllMaschine = new int[Maszyna.liczbaMaszyn,Maszyna.liczbaZadan];
+
+            listAllMaschine[0,0] = Maszyny[0].TimeWithTask[tableOfPermutation[0]].Time;
+
+            for(int i = 1; i<Maszyna.liczbaZadan; i++)
+            {
+                listAllMaschine[0,i] = listAllMaschine[0,i-1] + Maszyny[0].TimeWithTask[tableOfPermutation[i]].Time;
+            }
+
+
+            for(int j = 1; j < Maszyna.liczbaMaszyn; j++)
+            {
+                listAllMaschine[j,0] = listAllMaschine[j-1,0] + Maszyny[j].TimeWithTask[tableOfPermutation[0]].Time;
+                for(int i = 1; i<Maszyna.liczbaZadan; i++)
+                {
+                    listAllMaschine[j, i] = Math.Max(listAllMaschine[j, i-1], listAllMaschine[j-1,i]) + Maszyny[j].TimeWithTask[tableOfPermutation[i]].Time;
+                }
+            }
+
+        }
+
+        public static void johnsonAlgoritmForTwoMachine(List<Maszyna> Maszyny)
+        {
+            int[] tableOfPermutation = new int[Maszyna.liczbaZadan];
+            chooseOptimalPermutationForTwoMachine(Maszyny, tableOfPermutation);
+            calculateCMax(Maszyny, tableOfPermutation); // umie działać dla dwuch jak i trzech maszyn
+        }
+
+        public static void johnsonAlgoritmForThreeMachine(List<Maszyna> Maszyny)
+        {
+            List<Maszyna> wirtualMachine = new List<Maszyna>();
+            int[] tableOfPermutation = new int[Maszyna.liczbaZadan];
+
+            for(int i = 0; i<(Maszyna.liczbaMaszyn-1); i++)
+            {
+                wirtualMachine.Add(new Maszyna(i+1));
+                for(int j = 0; j<Maszyna.liczbaZadan; j++)
+                {
+                    wirtualMachine[i].TimeWithTask.Add(new TimeWithTask(j+1 ,(Maszyny[i].TimeWithTask[j].Time + Maszyny[i+1].TimeWithTask[j].Time)));
+                }
+            }
+            
+            chooseOptimalPermutationForTwoMachine(wirtualMachine, tableOfPermutation);
+            calculateCMax(Maszyny, tableOfPermutation);
+        }
+
+        public static void johnsonAlgoritm(List<Maszyna> Maszyny)
+        {
+            if(Maszyna.liczbaMaszyn == 2)
+            {
+                johnsonAlgoritmForTwoMachine(Maszyny);
+            }
+            else if(Maszyna.liczbaMaszyn == 3)
+            {   
+                johnsonAlgoritmForThreeMachine(Maszyny);
+            }
+        }
+
     }
+
 }

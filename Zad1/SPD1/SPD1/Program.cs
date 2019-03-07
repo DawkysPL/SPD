@@ -19,8 +19,9 @@ namespace SPD1
 
             //poprawny podzial czasu na dane zadania
             WczytajDaneDoMaszyn(Maszyny,text);
-            Algorytmy.przegladZupelny(Maszyny);
-            Console.ReadLine();
+            Algorytmy.johnsonAlgoritm(Maszyny);
+            //Algorytmy.przegladZupelny(Maszyny);
+           //Console.ReadLine();
         }
         #region MyLoadFunctions
         static string LaczStringi(int a, int b)

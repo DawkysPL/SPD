@@ -5,3 +5,10 @@ C:\Users\micha\Desktop\SPD_TUTAJ\Zad1\SPD1\SPD1\obj\Debug\SPD1.csprojAssemblyRef
 C:\Users\micha\Desktop\SPD_TUTAJ\Zad1\SPD1\SPD1\obj\Debug\SPD1.csproj.CoreCompileInputs.cache
 C:\Users\micha\Desktop\SPD_TUTAJ\Zad1\SPD1\SPD1\obj\Debug\SPD1.exe
 C:\Users\micha\Desktop\SPD_TUTAJ\Zad1\SPD1\SPD1\obj\Debug\SPD1.pdb
+C:\Users\Mateusz\Desktop\pwr6\SPD\Zad1\SPD1\SPD1\bin\Debug\SPD1.exe.config
+C:\Users\Mateusz\Desktop\pwr6\SPD\Zad1\SPD1\SPD1\bin\Debug\SPD1.exe
+C:\Users\Mateusz\Desktop\pwr6\SPD\Zad1\SPD1\SPD1\bin\Debug\SPD1.pdb
+C:\Users\Mateusz\Desktop\pwr6\SPD\Zad1\SPD1\SPD1\obj\Debug\SPD1.csprojResolveAssemblyReference.cache
+C:\Users\Mateusz\Desktop\pwr6\SPD\Zad1\SPD1\SPD1\obj\Debug\SPD1.csproj.CoreCompileInputs.cache
+C:\Users\Mateusz\Desktop\pwr6\SPD\Zad1\SPD1\SPD1\obj\Debug\SPD1.exe
+C:\Users\Mateusz\Desktop\pwr6\SPD\Zad1\SPD1\SPD1\obj\Debug\SPD1.pdb
