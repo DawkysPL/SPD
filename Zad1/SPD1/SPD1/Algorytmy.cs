@@ -38,7 +38,7 @@ namespace SPD1
             int[] tablicaPermutacji = new int[liczbaZadan];
             for (int i = 0; i < liczbaZadan; i++)
             {
-                tablicaPermutacji[i] = i + 1;
+                tablicaPermutacji[i] = i;
             }
 
             for (int iterationIndex = 0; iterationIndex < (ObliczSilnie(liczbaZadan) - 1); iterationIndex++)
