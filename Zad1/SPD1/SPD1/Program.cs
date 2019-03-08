@@ -20,8 +20,8 @@ namespace SPD1
             //poprawny podzial czasu na dane zadania
             WczytajDaneDoMaszyn(Maszyny,text);
             Algorytmy.johnsonAlgoritm(Maszyny);
-            //Algorytmy.przegladZupelny(Maszyny);
-           //Console.ReadLine();
+            //Algorytmy.Permutacje(Maszyna.liczbaZadan,Maszyny);
+           Console.ReadLine();
         }
         #region MyLoadFunctions
         static string LaczStringi(int a, int b)

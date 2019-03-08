@@ -33,9 +33,8 @@ namespace SPD1
 4. Odbijamy lustrzanie szereg elementów od indeksu i+1 do końca szeregu.
    Otrzymamy szereg: 1 4 6 2 9 7 3 5 8. Wyznaczony szereg jest szukanym
    przez nas rozwiązaniem. */
-        public static List<int[]> Permutacje(int liczbaZadan)
-        {   
-            List<int[]> calaTablicaPermutacji = new List<int[]>();
+        public static void Permutacje(int liczbaZadan,List<Maszyna> Maszyny)
+        {
             int[] tablicaPermutacji = new int[liczbaZadan];
             for (int i = 0; i < liczbaZadan; i++)
             {
@@ -48,7 +47,7 @@ namespace SPD1
 
                 if (liczbaZadan < 2)
                 {
-                    return calaTablicaPermutacji;
+                    return ;
                 }
 
                 i = liczbaZadan - 1;
@@ -83,30 +82,19 @@ namespace SPD1
                     tablicaPermutacji[i - 1] = tablicaPermutacji[j - 1];
                     tablicaPermutacji[j - 1] = k;
                 }
-                calaTablicaPermutacji.Add(tablicaPermutacji);
+                int[,] listAllMaschine = calculateCMax(Maszyny, tablicaPermutacji);
+                getCmax(listAllMaschine);
             }
-            return calaTablicaPermutacji;
         }
 
-       /* public static void przegladZupelny(List<Maszyna> Maszyny)
+        public static int getCmax(int[,] listAllMachine)
         {
-            List<int[]> tablicaPermutacjiZadan = Permutacje(Maszyna.liczbaZadan);
-            List<TimeWithTask> tablicaCzasow = new List<TimeWithTask>();
-            int czasM2 = 0, czasM3 = 0;                                       //to mozesz usunac jak masz inny pomysl
-            foreach (var tablicaZadan in tablicaPermutacjiZadan)  
-            {
-                for (int index = 0; index < tablicaZadan.Length; index++)
-                {
-                    if(czasM2 == 0)
-                    czasM2 += Math.Max(Maszyny[0].TimeWithTask[tablicaZadan[index]].Time,0);
-                    else
-                    {
-                        
-                    }
-                }
-            }
+            Console.WriteLine("hello");
+
+            return 0;
         }
-        */
+
+
         public static void chooseOptimalPermutationForTwoMachine(List<Maszyna> Maszyny, int[] tableOfPermutation)
         {
             int[] table = new int[3]; // numer maszyny, numer zadania, najmniejsza wartosc
@@ -158,13 +146,13 @@ namespace SPD1
             }
         }
 
-        public static void calculateCMax(List<Maszyna> Maszyny, int[] tableOfPermutation)
+        public static int[,] calculateCMax(List<Maszyna> Maszyny, int[] tableOfPermutation)
         {
-            //List<int> listOfMaschineTimes = new List<int>();
             int[,] listAllMaschine = new int[Maszyna.liczbaMaszyn,Maszyna.liczbaZadan];
 
             listAllMaschine[0,0] = Maszyny[0].TimeWithTask[tableOfPermutation[0]].Time;
-
+            Console.WriteLine(tableOfPermutation.Length);
+            Console.WriteLine(Maszyna.liczbaZadan);
             for(int i = 1; i<Maszyna.liczbaZadan; i++)
             {
                 listAllMaschine[0,i] = listAllMaschine[0,i-1] + Maszyny[0].TimeWithTask[tableOfPermutation[i]].Time;
@@ -180,6 +168,7 @@ namespace SPD1
                 }
             }
 
+            return listAllMaschine;
         }
 
         public static void johnsonAlgoritmForTwoMachine(List<Maszyna> Maszyny)
