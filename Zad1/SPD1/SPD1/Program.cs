@@ -6,6 +6,7 @@ namespace SPD1
     {
         static void Main(string[] args)
         {
+            KlasaLosujaca losuj = new KlasaLosujaca();
             string[] text = System.IO.File.ReadAllLines(@"test.txt"); // SPD1 -> BIN -> DEBUG
             string daneStartowe = text[0];
             WczytajLiczbeZadanMaszyn(daneStartowe);

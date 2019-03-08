@@ -35,6 +35,15 @@ namespace SPD1
             {
                 tablicaPermutacji[i] = i;
             }
+            int[,] listAllMaschine =  calculateCMax(Maszyny, tablicaPermutacji);
+            WynikAlgorytmu Wynik = getCmax(listAllMaschine);
+            sw.Write("Permutacja: ");
+            for (int b = 0; b < tablicaPermutacji.Length; b++)
+            {
+                sw.Write($"{tablicaPermutacji[b]+1} | ");
+            }
+            sw.Write($"Czas: {Wynik.Cmax} | Cmax od maszyny: {Wynik.Index + 1}");
+            sw.WriteLine();
             for (int iterationIndex = 0; iterationIndex < (ObliczSilnie(liczbaZadan) - 1); iterationIndex++)
             {
                 int i, j, k;
@@ -71,12 +80,12 @@ namespace SPD1
                     tablicaPermutacji[i - 1] = tablicaPermutacji[j - 1];
                     tablicaPermutacji[j - 1] = k;
                 }
-                int[,] listAllMaschine = calculateCMax(Maszyny, tablicaPermutacji);
-                WynikAlgorytmu Wynik = getCmax(listAllMaschine);
+                listAllMaschine = calculateCMax(Maszyny, tablicaPermutacji);
+                Wynik = getCmax(listAllMaschine);
                 sw.Write("Permutacja: ");
                 for (int b = 0; b < tablicaPermutacji.Length; b++)
                 {
-                    sw.Write($"{tablicaPermutacji[b]} | ");
+                    sw.Write($"{tablicaPermutacji[b]+1} | ");
                 }
                 sw.Write($"Czas: {Wynik.Cmax} | Cmax od maszyny: {Wynik.Index + 1}");
                 sw.WriteLine();
@@ -194,7 +203,7 @@ namespace SPD1
             sw.Write("Permutacja: ");
             for (int b = 0; b < tableOfPermutation.Length; b++)
             {
-                sw.Write($"{tableOfPermutation[b]} | ");
+                sw.Write($"{tableOfPermutation[b]+1} | ");
             }
             sw.Write($"Czas: {Result.Cmax} | Cmax od maszyny: {Result.Index + 1}");
             sw.WriteLine();
@@ -225,7 +234,7 @@ namespace SPD1
             sw.Write("Permutacja: ");
             for (int b = 0; b < tableOfPermutation.Length; b++)
             {
-                sw.Write($"{tableOfPermutation[b]} | ");
+                sw.Write($"{tableOfPermutation[b]+1} | ");
             }
             sw.Write($"Czas: {Result.Cmax} | Cmax od maszyny: {Result.Index + 1}");
             sw.WriteLine();

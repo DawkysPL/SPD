@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorytmy.cs" />
+    <Compile Include="KlasaLosujaca.cs" />
     <Compile Include="Maszyna.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
