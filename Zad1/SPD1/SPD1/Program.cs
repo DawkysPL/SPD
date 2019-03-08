@@ -9,19 +9,16 @@ namespace SPD1
             string[] text = System.IO.File.ReadAllLines(@"test.txt"); // SPD1 -> BIN -> DEBUG
             string daneStartowe = text[0];
             WczytajLiczbeZadanMaszyn(daneStartowe);
-
             // tworzenie maszyn
             List<Maszyna> Maszyny = new List<Maszyna>();
             for (int j = 0; j < Maszyna.liczbaMaszyn; j++)
             {
             Maszyny.Add(new Maszyna(Maszyna.liczId++));
             }
-
             //poprawny podzial czasu na dane zadania
             WczytajDaneDoMaszyn(Maszyny,text);
             Algorytmy.johnsonAlgoritm(Maszyny);
-            //Algorytmy.Permutacje(Maszyna.liczbaZadan,Maszyny);
-           Console.ReadLine();
+            Algorytmy.Permutacje(Maszyna.liczbaZadan,Maszyny);
         }
         #region MyLoadFunctions
         static string LaczStringi(int a, int b)

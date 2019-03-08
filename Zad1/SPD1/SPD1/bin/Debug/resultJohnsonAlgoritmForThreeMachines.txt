@@ -1,0 +1,1 @@
+Permutacja: 0 | 3 | 2 | 1 | Czas: 32 | Cmax od maszyny: 3

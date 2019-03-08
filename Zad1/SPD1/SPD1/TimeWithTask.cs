@@ -6,7 +6,6 @@
         {
 
         }
-
         public TimeWithTask(int _nrTaska, int _time)
         {
             NumerTaska = _nrTaska;
