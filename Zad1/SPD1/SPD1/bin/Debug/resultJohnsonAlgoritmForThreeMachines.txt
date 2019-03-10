@@ -1,1 +1,0 @@
-Permutacja: 4 | 9 | 7 | 2 | 1 | 8 | 6 | 5 | 3 | Czas: 306 | Cmax od maszyny: 3

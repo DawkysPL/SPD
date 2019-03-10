@@ -1,0 +1,15 @@
+C:\Users\Mateusz\Desktop\SPD_z_wizualizacją\SPD_z_wizualizacją\obj\Debug\SPD_z_wizualizacją.csprojResolveAssemblyReference.cache
+C:\Users\Mateusz\Desktop\SPD_z_wizualizacją\SPD_z_wizualizacją\obj\Debug\MainWindow.g.cs
+C:\Users\Mateusz\Desktop\SPD_z_wizualizacją\SPD_z_wizualizacją\obj\Debug\App.g.cs
+C:\Users\Mateusz\Desktop\SPD_z_wizualizacją\SPD_z_wizualizacją\obj\Debug\SPD_z_wizualizacją_MarkupCompile.cache
+C:\Users\Mateusz\Desktop\SPD_z_wizualizacją\SPD_z_wizualizacją\obj\Debug\SPD_z_wizualizacją_MarkupCompile.lref
+C:\Users\Mateusz\Desktop\SPD_z_wizualizacją\SPD_z_wizualizacją\bin\Debug\SPD_z_wizualizacją.exe.config
+C:\Users\Mateusz\Desktop\SPD_z_wizualizacją\SPD_z_wizualizacją\bin\Debug\SPD_z_wizualizacją.exe
+C:\Users\Mateusz\Desktop\SPD_z_wizualizacją\SPD_z_wizualizacją\bin\Debug\SPD_z_wizualizacją.pdb
+C:\Users\Mateusz\Desktop\SPD_z_wizualizacją\SPD_z_wizualizacją\obj\Debug\MainWindow.baml
+C:\Users\Mateusz\Desktop\SPD_z_wizualizacją\SPD_z_wizualizacją\obj\Debug\SPD_z_wizualizacją.g.resources
+C:\Users\Mateusz\Desktop\SPD_z_wizualizacją\SPD_z_wizualizacją\obj\Debug\SPD_z_wizualizacją.Properties.Resources.resources
+C:\Users\Mateusz\Desktop\SPD_z_wizualizacją\SPD_z_wizualizacją\obj\Debug\SPD_z_wizualizacją.csproj.GenerateResource.cache
+C:\Users\Mateusz\Desktop\SPD_z_wizualizacją\SPD_z_wizualizacją\obj\Debug\SPD_z_wizualizacją.csproj.CoreCompileInputs.cache
+C:\Users\Mateusz\Desktop\SPD_z_wizualizacją\SPD_z_wizualizacją\obj\Debug\SPD_z_wizualizacją.exe
+C:\Users\Mateusz\Desktop\SPD_z_wizualizacją\SPD_z_wizualizacją\obj\Debug\SPD_z_wizualizacją.pdb
