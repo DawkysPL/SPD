@@ -21,6 +21,7 @@ namespace SPD2
             }
             //get data into machine
             LoadDataIntoMachines(Machines, text);
+            Algorithms.algorithmNEH(Machines);
 
             Console.ReadLine();
         }

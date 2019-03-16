@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SPD2
 {
-    class TimeWithTask
+    class TimeWithTask : IComparable<TimeWithTask>
     {
         public TimeWithTask()
         {
@@ -18,6 +18,16 @@ namespace SPD2
             Time = _time;
         }
         public int NumberTask { get; private set; }
-        public int Time { get; private set; }
+        public int Time { get;  set; }
+
+        public int CompareTo(TimeWithTask comparePart)
+        {
+            if (comparePart == null)
+                return 1;
+            else
+            {
+                return this.Time.CompareTo(comparePart.Time);
+            }
+        }
     }
 }
