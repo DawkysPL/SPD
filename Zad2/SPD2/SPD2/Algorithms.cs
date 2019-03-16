@@ -6,7 +6,7 @@ namespace SPD2
 {
     class Algorithms
     {
-        public static ResultOfAlgorithm getCmax(int[,] listAllMachine)
+        /*public static ResultOfAlgorithm getCmax(int[,] listAllMachine)
         {
             List<int> CmaxAllMachines = new List<int>();
             for (int i = 0; i < Machine.numberOfMachines; i++)
@@ -18,26 +18,27 @@ namespace SPD2
             int index = CmaxAllMachines.IndexOf(maxVal);
             ResultOfAlgorithm Result = new ResultOfAlgorithm(index, maxVal);
             return Result;
-        }
+        }*/
 
         public static int calculateCMax(List<Machine> Machines, List<int> tableOfPermutation)
         {
             int[,] listAllMaschine = new int[Machine.numberOfMachines, tableOfPermutation.Count];
-            listAllMaschine[0, 0] = Machines[0].TimeWithTask[tableOfPermutation[0]].Time;
+            listAllMaschine[0, 0] = Machines[0].TimeWithTask[tableOfPermutation[0]-1].Time;
             for (int i = 1; i < tableOfPermutation.Count; i++)
             {
-                listAllMaschine[0, i] = listAllMaschine[0, i - 1] + Machines[0].TimeWithTask[tableOfPermutation[i]].Time;
+                listAllMaschine[0, i] = listAllMaschine[0, i - 1] + Machines[0].TimeWithTask[tableOfPermutation[i]-1].Time;
             }
             for (int j = 1; j < Machine.numberOfMachines; j++)
             {
-                listAllMaschine[j, 0] = listAllMaschine[j - 1, 0] + Machines[j].TimeWithTask[tableOfPermutation[0]].Time;
+                listAllMaschine[j, 0] = listAllMaschine[j - 1, 0] + Machines[j].TimeWithTask[tableOfPermutation[0]-1].Time;
                 for (int i = 1; i < tableOfPermutation.Count; i++)
                 {
-                    listAllMaschine[j, i] = Math.Max(listAllMaschine[j, i - 1], listAllMaschine[j - 1, i]) + Machines[j].TimeWithTask[tableOfPermutation[i]].Time;
+                    listAllMaschine[j, i] = Math.Max(listAllMaschine[j, i - 1], listAllMaschine[j - 1, i]) + Machines[j].TimeWithTask[tableOfPermutation[i]-1].Time;
                 }
             }
-            return listAllMaschine[Machine.numberOfMachines-1,Machine.numberOfTasks-1];
+            return listAllMaschine[Machine.numberOfMachines-1, tableOfPermutation.Count-1];
         }
+
 
         public static List<TimeWithTask> getWeights(List<Machine> Machines)
         {
@@ -59,6 +60,7 @@ namespace SPD2
                 }
             }
             weights.Sort();
+            weights.Reverse();
             return weights;
         }
 
@@ -67,34 +69,31 @@ namespace SPD2
             List<TimeWithTask> weights = getWeights(Machines);
             List<int> tasks = new List<int>();
             List<int> sortedTasks = new List<int>();
-            
-            for (int i = 0; i < Machine.numberOfTasks; i++)
+            int Cmax;
+
+            tasks.Add(weights[0].NumberTask);
+            sortedTasks.Add(weights[0].NumberTask);
+            for (int i = 1; i < Machine.numberOfTasks; i++)
             {
-                TimeWithTask a = weights[weights.Count - 1];
-                foreach (var weight in weights)
-                {
-                    if (weight.Time == a.Time)
-                    {
-                        tasks.Add(weight.NumberTask);
-                        weights.Remove(weight);
-                        break;
+               tasks.Insert(0, weights[i].NumberTask);
+                sortedTasks.Insert(0, weights[i].NumberTask);
+               for(int j =0; j<i; j++){
+                    int variable = tasks[j];
+                    tasks[j] = tasks[j+1];
+                    tasks[j+1] = variable;
+                    if(calculateCMax(Machines, sortedTasks)>calculateCMax(Machines, tasks)){
+                   //     sortedTasks = tasks;
+                        for(int k = 0; k<tasks.Count; k++){
+                            sortedTasks[k] = tasks[k];
+                        }   
                     }
-                }
-             //tutaj 
-             if (i == 0)
-             {
-                 sortedTasks.Add(tasks[0]);
-             }
-             else
-             {
-                 int getCmax = 0;
-                 int[] table = new int[tasks.Count];
-                 for (int j = 0; j < tasks.Count; j++)
-                 {
-                    
-                 }
-             }  
+
+                } 
+               for(int k = 0; k<tasks.Count; k++){
+                 tasks[k] = sortedTasks[k];
+               }  
             }
+            Cmax = calculateCMax(Machines,sortedTasks);
         }
     }
 }

@@ -1,12 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Zad1",
-    "\\Zad1\\SPD1",
-    "\\Zad1\\SPD1\\SPD1",
-    "\\Zad1\\SPD1\\SPD1\\bin",
-    "\\Zad1\\SPD1\\SPD1\\bin\\Debug"
+    "\\Zad2",
+    "\\Zad2\\SPD2",
+    "\\Zad2\\SPD2\\SPD2"
   ],
-  "SelectedNode": "\\Zad1\\SPD1\\SPD1\\TimeWithTask.cs",
+  "SelectedNode": "\\Zad2\\SPD2\\SPD2\\Algorithms.cs",
   "PreviewInSolutionExplorer": false
 }

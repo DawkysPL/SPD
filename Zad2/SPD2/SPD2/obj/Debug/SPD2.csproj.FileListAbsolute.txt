@@ -5,3 +5,10 @@ C:\Users\micha\Desktop\SPD_TUTAJ\Zad2\SPD2\SPD2\bin\Debug\SPD2.exe
 C:\Users\micha\Desktop\SPD_TUTAJ\Zad2\SPD2\SPD2\bin\Debug\SPD2.pdb
 C:\Users\micha\Desktop\SPD_TUTAJ\Zad2\SPD2\SPD2\obj\Debug\SPD2.exe
 C:\Users\micha\Desktop\SPD_TUTAJ\Zad2\SPD2\SPD2\obj\Debug\SPD2.pdb
+C:\Users\Mateusz\Desktop\pwr6\SPD\Zad2\SPD2\SPD2\obj\Debug\SPD2.csprojResolveAssemblyReference.cache
+C:\Users\Mateusz\Desktop\pwr6\SPD\Zad2\SPD2\SPD2\obj\Debug\SPD2.csproj.CoreCompileInputs.cache
+C:\Users\Mateusz\Desktop\pwr6\SPD\Zad2\SPD2\SPD2\obj\Debug\SPD2.exe
+C:\Users\Mateusz\Desktop\pwr6\SPD\Zad2\SPD2\SPD2\obj\Debug\SPD2.pdb
+C:\Users\Mateusz\Desktop\pwr6\SPD\Zad2\SPD2\SPD2\bin\Debug\SPD2.exe.config
+C:\Users\Mateusz\Desktop\pwr6\SPD\Zad2\SPD2\SPD2\bin\Debug\SPD2.exe
+C:\Users\Mateusz\Desktop\pwr6\SPD\Zad2\SPD2\SPD2\bin\Debug\SPD2.pdb
