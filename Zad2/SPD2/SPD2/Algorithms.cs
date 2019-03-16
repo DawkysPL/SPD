@@ -67,21 +67,21 @@ namespace SPD2
         public static void algorithmNEH(List<Machine> Machines)
         {
             List<TimeWithTask> weights = getWeights(Machines);
-            List<int> tasks = new List<int>();
-            List<int> sortedTasks = new List<int>();
+            List<int> tasks = new List<int>(); // lista z roboczą listą
+            List<int> sortedTasks = new List<int>(); // lista z najlepszym ustawieniem w danej chwili
             int Cmax;
 
-            tasks.Add(weights[0].NumberTask);
+            tasks.Add(weights[0].NumberTask); // dodanie pierwszego elementu
             sortedTasks.Add(weights[0].NumberTask);
             for (int i = 1; i < Machine.numberOfTasks; i++)
             {
-               tasks.Insert(0, weights[i].NumberTask);
+               tasks.Insert(0, weights[i].NumberTask); // dodawanie kolejnych elementów
                 sortedTasks.Insert(0, weights[i].NumberTask);
-               for(int j =0; j<i; j++){
+               for(int j =0; j<i; j++){ // zamiana miejsca dla nowo dodanego elementu
                     int variable = tasks[j];
                     tasks[j] = tasks[j+1];
                     tasks[j+1] = variable;
-                    if(calculateCMax(Machines, sortedTasks)>calculateCMax(Machines, tasks)){
+                    if(calculateCMax(Machines, sortedTasks)>calculateCMax(Machines, tasks)){ // sprawdzenie czy po zamianie Cmax jest mniejsze
                    //     sortedTasks = tasks;
                         for(int k = 0; k<tasks.Count; k++){
                             sortedTasks[k] = tasks[k];
@@ -91,9 +91,9 @@ namespace SPD2
                 } 
                for(int k = 0; k<tasks.Count; k++){
                  tasks[k] = sortedTasks[k];
-               }  
+               }  // przypisanie wartosci najlepszej po całym przejsciu do listy roboczej 
             }
-            Cmax = calculateCMax(Machines,sortedTasks);
+            Cmax = calculateCMax(Machines,sortedTasks); // wyliczenie Cmax
         }
     }
 }
