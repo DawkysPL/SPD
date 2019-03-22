@@ -21,7 +21,14 @@ namespace SPD2
             }
             //get data into machine
             LoadDataIntoMachines(Machines, text);
+
             Algorithms.algorithmNEH(Machines);
+            Algorithms.algorithmNEHwithAcceleration(Machines);
+            Algorithms.algorithmNEHwithModification(Machines, 1);
+            Algorithms.algorithmNEHwithModification(Machines, 2);
+            Algorithms.algorithmNEHwithModification(Machines, 3);
+            Algorithms.algorithmNEHwithModificationFour(Machines);
+            
 
             Console.ReadLine();
         }

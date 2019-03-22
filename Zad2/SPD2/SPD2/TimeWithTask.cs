@@ -17,8 +17,8 @@ namespace SPD2
             NumberTask = _nrTask;
             Time = _time;
         }
-        public int NumberTask { get; private set; }
-        public int Time { get;  set; }
+        public int NumberTask { get; set; }
+        public int Time { get; set; }
 
         public int CompareTo(TimeWithTask comparePart)
         {
