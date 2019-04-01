@@ -519,6 +519,54 @@ namespace SPD2
             Console.WriteLine(Cmax2);
         }
 
+        public static void swapTasks(List<int> tasks)
+{           Random rand = new Random();
+            int firstElementToSwap = rand.Next(0, tasks.Count);
+            int secondElementToSwap = rand.Next(0, tasks.Count);
+            int helper = tasks[firstElementToSwap];
+            tasks[firstElementToSwap] = tasks[secondElementToSwap];
+            tasks[secondElementToSwap] = helper;
+
+}
+        public static double acceptanceFunction(int Cmax, int NewCmax, double temperature)
+        {
+            if(Cmax<=NewCmax)
+            {
+                return Math.Exp((Cmax-NewCmax)/temperature);
+            }
+            else
+            {
+                return 1;
+            }
+        }
+
+        public static void simulatedAnnealing(List<Machine> Machines)
+        {
+            int helpCmax = 0;
+            double temperature = 1000;
+            Random rand = new Random();
+            List<TimeWithTask> weights = getWeights(Machines);
+            List<int> tasks = new List<int>(); // lista z roboczą listą
+            int Cmax = -1;
+
+            tasks.Add(weights[0].NumberTask); // dodanie pierwszego elementu
+            for (int i = 1; i < Machine.numberOfTasks; i++)
+            {
+                tasks.Add(weights[i].NumberTask); // dodawanie kolejnych elementów
+                Cmax = calculateCMaxWithAcceleration(Machines, tasks); // wyliczanie Cmax
+            }
+            Console.WriteLine(Cmax);
+            for(;temperature>0.0001; temperature *= 0.95)
+            {
+                swapTasks(tasks);
+                helpCmax = calculateCMax(Machines, tasks);
+                if(acceptanceFunction(Cmax,helpCmax,temperature)>= rand.NextDouble())
+                {
+                    Cmax = helpCmax;
+                }
+            }
+            Console.WriteLine(Cmax);
+        }
 
     }
 }

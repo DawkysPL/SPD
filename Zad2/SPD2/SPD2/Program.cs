@@ -21,14 +21,18 @@ namespace SPD2
             }
             //get data into machine
             LoadDataIntoMachines(Machines, text);
-
-            Algorithms.algorithmNEH(Machines);
-            Algorithms.algorithmNEHwithAcceleration(Machines);
-            Algorithms.algorithmNEHwithModification(Machines, 1);
-            Algorithms.algorithmNEHwithModification(Machines, 2);
-            Algorithms.algorithmNEHwithModification(Machines, 3);
-            Algorithms.algorithmNEHwithModificationFour(Machines);
+            //int start, stop;
+            //start = Environment.TickCount & Int32.MaxValue;
+            //Algorithms.algorithmNEHwithAcceleration(Machines);
+            //stop = Environment.TickCount & Int32.MaxValue;
+            //Console.WriteLine("Czas pracy: " + (stop - start));
+           //Algorithms.algorithmNEH(Machines);
             
+            //Algorithms.algorithmNEHwithModification(Machines, 1);
+            //Algorithms.algorithmNEHwithModification(Machines, 2);
+            //Algorithms.algorithmNEHwithModification(Machines, 3);
+            //Algorithms.algorithmNEHwithModificationFour(Machines);
+            Algorithms.simulatedAnnealing(Machines);
 
             Console.ReadLine();
         }
