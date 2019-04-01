@@ -20,7 +20,7 @@ namespace SPD2
             return Result;
         }*/
 
-         //   public static int numberOfException;
+        //   public static int numberOfException;
 
         /* Zastosowanie metodyki grafu z zapisywanie czasu zakoczenia kazdego zadania w tablicy 2-wymiarowej */
         public static int calculateCMax(List<Machine> Machines, List<int> tableOfPermutation)
@@ -67,23 +67,24 @@ namespace SPD2
             // naprawa sortowania
             int k = 1;
             int m = 0;
-            for(;k!=m;){ // dopoki nie dokona zmiany w liscie sie wykonuje
+            for (; k != m;)
+            { // dopoki nie dokona zmiany w liscie sie wykonuje
                 k = 0;
                 m = 0;
-            for (int i = 0; (i < weights.Count - 1); i++)
-            {
-
-                if (weights[i].Time == weights[i + 1].Time)
+                for (int i = 0; (i < weights.Count - 1); i++)
                 {
-                    if (weights[i].NumberTask > weights[i + 1].NumberTask)
+
+                    if (weights[i].Time == weights[i + 1].Time)
                     {
-                        int taskMustChange = weights[i].NumberTask; // zmienia miejscami numer zadania dla takich samych wag aby byly w kolejnosci rosnacej
-                        weights[i].NumberTask = weights[i + 1].NumberTask;
-                        weights[i + 1].NumberTask = taskMustChange;
+                        if (weights[i].NumberTask > weights[i + 1].NumberTask)
+                        {
+                            int taskMustChange = weights[i].NumberTask; // zmienia miejscami numer zadania dla takich samych wag aby byly w kolejnosci rosnacej
+                            weights[i].NumberTask = weights[i + 1].NumberTask;
+                            weights[i + 1].NumberTask = taskMustChange;
                             ++k;
+                        }
                     }
                 }
-            }
             }
             return weights;
         }
@@ -283,7 +284,8 @@ namespace SPD2
             Console.WriteLine(Cmax);
         }
 
-        public static void algorithmNEHwithModificationFour(List<Machine> Machines){
+        public static void algorithmNEHwithModificationFour(List<Machine> Machines)
+        {
             List<TimeWithTask> weights = getWeights(Machines);
             List<int> tasks = new List<int>(); // lista z roboczą listą
             List<int> newTasks = new List<int>(); // lista z pocna listą
@@ -300,25 +302,27 @@ namespace SPD2
                 Cmax = calculateCMaxWithAcceleration(Machines, tasks); // wyliczanie Cmax
                 Cmax2 = Cmax;
                 // kod usuwajcy po jednym tasku i dokonujacy ponownie nowego ustawienia 
-                for(int j = 0; j<tasks.Count; j++)
+                for (int j = 0; j < tasks.Count; j++)
                 {
-                   if(tasks[j] == weights[i].NumberTask){
+                    if (tasks[j] == weights[i].NumberTask)
+                    {
                     }
-                    else {
-                        for(int k = 0; k<tasks.Count; k++)
+                    else
+                    {
+                        for (int k = 0; k < tasks.Count; k++)
                         {
 
                             newTasks[k] = tasks[k];
                         }
-                    newTasks.RemoveAt(j);
-                    if(Cmax2> calculateCMax(Machines, newTasks)) // szukanie najbardziej zmniejszonego Cmax
-                    {
+                        newTasks.RemoveAt(j);
+                        if (Cmax2 > calculateCMax(Machines, newTasks)) // szukanie najbardziej zmniejszonego Cmax
+                        {
                             Cmax2 = calculateCMax(Machines, newTasks);
                             numberOfDelete = j;
+                        }
+                        newTasks.Add(0);
                     }
-                    newTasks.Add(0);
-                    }
-                   
+
                 }
                 tasks.Add(tasks[numberOfDelete]); // przezucenie wybraneo zadania na koniec listy w celu wykorzystania tak jak NEH z przyspieszeniem
                 tasks.RemoveAt(numberOfDelete);
@@ -333,35 +337,35 @@ namespace SPD2
         public static void addNewCriticalPath(GraphVertice[,] listAllMaschine2, List<GraphVertice> criticalPath2, int index1, int index2)
         {
             // rekurencyjna metoda tworzaca scieżkę krytyczną idąca po największych czasach zakonczenia
-            if(index1 == 0)
+            if (index1 == 0)
             {
-                if(index2 == 0){} // natrafienie na koniec
+                if (index2 == 0) { } // natrafienie na koniec
                 else // poruszanie sie krancem
                 {
-                    criticalPath2.Add(listAllMaschine2[index1,index2-1]);
+                    criticalPath2.Add(listAllMaschine2[index1, index2 - 1]);
                     addNewCriticalPath(listAllMaschine2, criticalPath2, index1, (index2 - 1));
                 }
             }
-            else if(index2 == 0)
+            else if (index2 == 0)
             {
-                if(index1 == 0){} // natrafienie na koniec 
+                if (index1 == 0) { } // natrafienie na koniec 
                 else
                 { // poruszanie sie po krancu
-                    criticalPath2.Add(listAllMaschine2[index1-1,index2]);
-                    addNewCriticalPath(listAllMaschine2, criticalPath2, (index1-1), index2);
+                    criticalPath2.Add(listAllMaschine2[index1 - 1, index2]);
+                    addNewCriticalPath(listAllMaschine2, criticalPath2, (index1 - 1), index2);
                 }
             }
-            else 
+            else
             { // poruszanie sie nie krancowymi, sprawdzamy w przecinym kierunku do skierowania grafu który czas wezłów wczesniej jest wiekszy
-                if(listAllMaschine2[index1,index2-1].FinishTime > listAllMaschine2[index1-1,index2].FinishTime)
+                if (listAllMaschine2[index1, index2 - 1].FinishTime > listAllMaschine2[index1 - 1, index2].FinishTime)
                 {
-                    criticalPath2.Add(listAllMaschine2[index1,index2-1]);
+                    criticalPath2.Add(listAllMaschine2[index1, index2 - 1]);
                     addNewCriticalPath(listAllMaschine2, criticalPath2, index1, (index2 - 1));
                 }
                 else
                 {
-                    criticalPath2.Add(listAllMaschine2[index1-1,index2]);
-                    addNewCriticalPath(listAllMaschine2, criticalPath2, (index1-1), index2);
+                    criticalPath2.Add(listAllMaschine2[index1 - 1, index2]);
+                    addNewCriticalPath(listAllMaschine2, criticalPath2, (index1 - 1), index2);
                 }
             }
         }
@@ -410,12 +414,12 @@ namespace SPD2
             criticalPath.Add(listAllMaschine[(Machine.numberOfMachines - 1), (tableOfPermutation.Count - 1)]); //pierwszy element
             addNewCriticalPath(listAllMaschine, criticalPath, (Machine.numberOfMachines - 1), (tableOfPermutation.Count - 1));
 
-            if( modificationNumber == 1) // pierwsza modyfikacja szukamy najdluzszego czasu wykonywania
+            if (modificationNumber == 1) // pierwsza modyfikacja szukamy najdluzszego czasu wykonywania
             {
-                for(int m = 0; m<criticalPath.Count; m++)
+                for (int m = 0; m < criticalPath.Count; m++)
                 {
-                    if(criticalPath[m].TaskId == notModification){} // jesli to jest ten task który był wczesniej rotowany to ne sprawdzamy
-                    else if(criticalPath[m].TaskTime > hightTime) // jesli czas wiekszy to zamienamy hightTime i zapisujemy dla jakiego elementu sciezki
+                    if (criticalPath[m].TaskId == notModification) { } // jesli to jest ten task który był wczesniej rotowany to ne sprawdzamy
+                    else if (criticalPath[m].TaskTime > hightTime) // jesli czas wiekszy to zamienamy hightTime i zapisujemy dla jakiego elementu sciezki
                     {
                         hightTime = criticalPath[m].TaskTime;
                         deleteId = m;
@@ -424,77 +428,77 @@ namespace SPD2
             }
             else if (modificationNumber == 2) // szukanie po najwiekszej sumie czasow wykonywania 
             {
-                int[] sumTable = new int [(Machine.numberOfTasks + 1)];
-                for(int k = 0; k<(Machine.numberOfTasks + 1); k++) // stworznie tabeli zapisujacej sumy czasow na swoich numerach indeksow
+                int[] sumTable = new int[(Machine.numberOfTasks + 1)];
+                for (int k = 0; k < (Machine.numberOfTasks + 1); k++) // stworznie tabeli zapisujacej sumy czasow na swoich numerach indeksow
                 {
                     sumTable[k] = 0;
                 }
-                for(int m = 0; m<criticalPath.Count; m++)
+                for (int m = 0; m < criticalPath.Count; m++)
                 {
-                    if(criticalPath[m].TaskId == notModification){}
+                    if (criticalPath[m].TaskId == notModification) { }
                     else
                     {
                         sumTable[criticalPath[m].TaskId] += criticalPath[m].TaskId; // za kazdym natrafieniem zwiekszenie sumy o natrafiony czas dla danego tasku
                     }
                 }
-                for(int k = 0; k<(Machine.numberOfTasks + 1); k++) // odszukanie tego z najwiekszym czasem
+                for (int k = 0; k < (Machine.numberOfTasks + 1); k++) // odszukanie tego z najwiekszym czasem
                 {
-                    if(hightTime<sumTable[k])
+                    if (hightTime < sumTable[k])
                     {
-                    hightTime = sumTable[k];
-                    deleteId = k;
+                        hightTime = sumTable[k];
+                        deleteId = k;
                     }
                 }
             }
             else if (modificationNumber == 3) //szuaknie po największej liczbie wystapień
             {
-                int[] sumTable = new int [(Machine.numberOfTasks + 1)];
-                for(int k = 0; k<(Machine.numberOfTasks + 1); k++)
+                int[] sumTable = new int[(Machine.numberOfTasks + 1)];
+                for (int k = 0; k < (Machine.numberOfTasks + 1); k++)
                 {
                     sumTable[k] = 0;
                 }
-                for(int m = 0; m<criticalPath.Count; m++) //zwększanie liczby wystapie za kazdym napotkaniem
+                for (int m = 0; m < criticalPath.Count; m++) //zwększanie liczby wystapie za kazdym napotkaniem
                 {
-                    if(criticalPath[m].TaskId == notModification){}
+                    if (criticalPath[m].TaskId == notModification) { }
                     else
                     {
                         ++sumTable[criticalPath[m].TaskId];
                     }
                 }
-                for(int k = 0; k<(Machine.numberOfTasks + 1); k++)
+                for (int k = 0; k < (Machine.numberOfTasks + 1); k++)
                 {
-                    if(hightTime<sumTable[k])
+                    if (hightTime < sumTable[k])
                     {
-                    hightTime = sumTable[k];
-                    deleteId = k;
+                        hightTime = sumTable[k];
+                        deleteId = k;
                     }
                 }
             }
-         
 
-            if( modificationNumber == 1) // zamiana na ostatnie miejsce wyszukanego elementu (dwa rodaje bo raz po indeksie sciezki, a raz po wartosci id taska)
+
+            if (modificationNumber == 1) // zamiana na ostatnie miejsce wyszukanego elementu (dwa rodaje bo raz po indeksie sciezki, a raz po wartosci id taska)
             {
-            for(int i = 0; i<(tableOfPermutation.Count); i++)
-            {
-                if(tableOfPermutation[i] == criticalPath[deleteId].TaskId)
+                for (int i = 0; i < (tableOfPermutation.Count); i++)
                 {
-                tableOfPermutation.RemoveAt(i);
+                    if (tableOfPermutation[i] == criticalPath[deleteId].TaskId)
+                    {
+                        tableOfPermutation.RemoveAt(i);
+                    }
                 }
-            }
-            tableOfPermutation.Add(criticalPath[deleteId].TaskId);
+                tableOfPermutation.Add(criticalPath[deleteId].TaskId);
             }
             else
             {
-  {
-            for(int i = 0; i<(tableOfPermutation.Count); i++)
-            {
-                if(tableOfPermutation[i] == deleteId)
                 {
-                tableOfPermutation.RemoveAt(i);
+                    for (int i = 0; i < (tableOfPermutation.Count); i++)
+                    {
+                        if (tableOfPermutation[i] == deleteId)
+                        {
+                            tableOfPermutation.RemoveAt(i);
+                        }
+                    }
+                    tableOfPermutation.Add(deleteId);
                 }
-            }
-            tableOfPermutation.Add(deleteId);
-            }
             }
         }
 
@@ -512,7 +516,7 @@ namespace SPD2
                 Cmax = calculateCMaxWithAcceleration(Machines, tasks); // wyliczanie Cmax
                 createCriticelPath(Machines, tasks, weights[i].NumberTask, modificationNumber);
                 //create crytical path
-                
+
                 Cmax2 = calculateCMaxWithAcceleration(Machines, tasks); // wyliczenie po znalezieniu elementu modifikacji
 
             }
@@ -520,19 +524,20 @@ namespace SPD2
         }
 
         public static void swapTasks(List<int> tasks)
-{           Random rand = new Random();
+        {
+            Random rand = new Random();
             int firstElementToSwap = rand.Next(0, tasks.Count);
             int secondElementToSwap = rand.Next(0, tasks.Count);
             int helper = tasks[firstElementToSwap];
             tasks[firstElementToSwap] = tasks[secondElementToSwap];
             tasks[secondElementToSwap] = helper;
 
-}
+        }
         public static double acceptanceFunction(int Cmax, int NewCmax, double temperature)
         {
-            if(Cmax<=NewCmax)
+            if (Cmax <= NewCmax)
             {
-                return Math.Exp((Cmax-NewCmax)/temperature);
+                return Math.Exp((Cmax - NewCmax) / temperature);
             }
             else
             {
@@ -556,11 +561,11 @@ namespace SPD2
                 Cmax = calculateCMaxWithAcceleration(Machines, tasks); // wyliczanie Cmax
             }
             Console.WriteLine(Cmax);
-            for(;temperature>0.0001; temperature *= 0.95)
+            for (; temperature > 0.0001; temperature *= 0.95)
             {
                 swapTasks(tasks);
                 helpCmax = calculateCMax(Machines, tasks);
-                if(acceptanceFunction(Cmax,helpCmax,temperature)>= rand.NextDouble())
+                if (acceptanceFunction(Cmax, helpCmax, temperature) >= rand.NextDouble())
                 {
                     Cmax = helpCmax;
                 }
@@ -570,3 +575,4 @@ namespace SPD2
 
     }
 }
+

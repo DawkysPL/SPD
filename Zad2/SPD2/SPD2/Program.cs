@@ -26,8 +26,8 @@ namespace SPD2
             //Algorithms.algorithmNEHwithAcceleration(Machines);
             //stop = Environment.TickCount & Int32.MaxValue;
             //Console.WriteLine("Czas pracy: " + (stop - start));
-           //Algorithms.algorithmNEH(Machines);
-            
+            //Algorithms.algorithmNEH(Machines);
+
             //Algorithms.algorithmNEHwithModification(Machines, 1);
             //Algorithms.algorithmNEHwithModification(Machines, 2);
             //Algorithms.algorithmNEHwithModification(Machines, 3);
