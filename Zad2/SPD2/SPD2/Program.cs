@@ -21,20 +21,54 @@ namespace SPD2
             }
             //get data into machine
             LoadDataIntoMachines(Machines, text);
-            //int start, stop;
-            //start = Environment.TickCount & Int32.MaxValue;
-            //Algorithms.algorithmNEHwithAcceleration(Machines);
-            //stop = Environment.TickCount & Int32.MaxValue;
-            //Console.WriteLine("Czas pracy: " + (stop - start));
-            //Algorithms.algorithmNEH(Machines);
 
-            //Algorithms.algorithmNEHwithModification(Machines, 1);
-            //Algorithms.algorithmNEHwithModification(Machines, 2);
-            //Algorithms.algorithmNEHwithModification(Machines, 3);
-            //Algorithms.algorithmNEHwithModificationFour(Machines);
-            Algorithms.simulatedAnnealing(Machines);
+
+            // wszystkie ponizesz linie to wywołanie oraz wyswietlenie wartosci
+            int start, stop;
+            //start = Environment.TickCount & Int32.MaxValue;
+            //Algorithms.simulatedAnnealing(Machines, 1);
+            //stop = Environment.TickCount & Int32.MaxValue;
+            start = Environment.TickCount & Int32.MaxValue;
+            Algorithms.simulatedAnnealing(Machines, 1);
+            stop = Environment.TickCount & Int32.MaxValue;
+            Console.WriteLine("Czas pracy nr11: " + (stop - start));
+            /*start = Environment.TickCount & Int32.MaxValue;
+            Algorithms.simulatedAnnealing(Machines, 2);
+            stop = Environment.TickCount & Int32.MaxValue;
+            Console.WriteLine("Czas pracy nr21: " + (stop - start));
+            start = Environment.TickCount & Int32.MaxValue;
+            Algorithms.simulatedAnnealing(Machines, 3);
+            stop = Environment.TickCount & Int32.MaxValue;
+            Console.WriteLine("Czas pracy nr31: " + (stop - start));*/
+            start = Environment.TickCount & Int32.MaxValue;
+            Algorithms.simulatedAnnealing(Machines, 1);
+            stop = Environment.TickCount & Int32.MaxValue;
+            Console.WriteLine("Czas pracy nr12: " + (stop - start));
+            /*start = Environment.TickCount & Int32.MaxValue;
+            Algorithms.simulatedAnnealing(Machines, 2);
+            stop = Environment.TickCount & Int32.MaxValue;
+            Console.WriteLine("Czas pracy nr22: " + (stop - start));
+            start = Environment.TickCount & Int32.MaxValue;
+            Algorithms.simulatedAnnealing(Machines, 3);
+            stop = Environment.TickCount & Int32.MaxValue;
+            Console.WriteLine("Czas pracy nr32: " + (stop - start));*/
+            start = Environment.TickCount & Int32.MaxValue;
+            Algorithms.simulatedAnnealing(Machines, 1);
+            stop = Environment.TickCount & Int32.MaxValue;
+            Console.WriteLine("Czas pracy nr13: " + (stop - start));
+            /*start = Environment.TickCount & Int32.MaxValue;
+            Algorithms.simulatedAnnealing(Machines, 2);
+            stop = Environment.TickCount & Int32.MaxValue;
+            Console.WriteLine("Czas pracy nr23: " + (stop - start));
+            start = Environment.TickCount & Int32.MaxValue;
+            Algorithms.simulatedAnnealing(Machines, 3);
+            stop = Environment.TickCount & Int32.MaxValue;
+            Console.WriteLine("Czas pracy nr33: " + (stop - start));*/
+
 
             Console.ReadLine();
+
+
         }
 
         static void LoadNumbersOfTasksAndMachines(string dataStart)

@@ -523,6 +523,7 @@ namespace SPD2
             Console.WriteLine(Cmax2);
         }
 
+        // zamiana dwoch losowych elementow     
         public static void swapTasks(List<int> tasks)
         {
             Random rand = new Random();
@@ -533,11 +534,35 @@ namespace SPD2
             tasks[secondElementToSwap] = helper;
 
         }
+
+        // zamana dwoch lsowych sąsiadów
+        public static void swapNeighboringTasks(List<int> tasks)
+        {
+            Random rand = new Random();
+            int firstElementToSwap = rand.Next(0, tasks.Count - 1);
+            int secondElementToSwap = firstElementToSwap + 1;
+            int helper = tasks[firstElementToSwap];
+            tasks[firstElementToSwap] = tasks[secondElementToSwap];
+            tasks[secondElementToSwap] = helper;
+        }
+
+        // wstawainie losowego elementu w losowe miejsce
+        public static void insertTasks(List<int> tasks)
+        {
+            Random rand = new Random();
+            int firstElementToIinsert = rand.Next(0, tasks.Count);
+            int newPlace = rand.Next(0, tasks.Count + 1);
+            tasks.Insert(newPlace, tasks[firstElementToIinsert]);
+            tasks.RemoveAt(firstElementToIinsert);
+        }
+
+        // funkcja akceptacji
         public static double acceptanceFunction(int Cmax, int NewCmax, double temperature)
         {
             if (Cmax <= NewCmax)
             {
                 return Math.Exp((Cmax - NewCmax) / temperature);
+                //return 0;
             }
             else
             {
@@ -545,32 +570,110 @@ namespace SPD2
             }
         }
 
-        public static void simulatedAnnealing(List<Machine> Machines)
+        public static void simulatedAnnealing(List<Machine> Machines, int numberOfModification)
         {
-            int helpCmax = 0;
-            double temperature = 1000;
-            Random rand = new Random();
-            List<TimeWithTask> weights = getWeights(Machines);
-            List<int> tasks = new List<int>(); // lista z roboczą listą
-            int Cmax = -1;
+            int helpCmax = 0; // Cmax pomocne przy porównaniu nowo otrzymanego
+            double temperature = 10000; // temperatura poczatkowa
 
-            tasks.Add(weights[0].NumberTask); // dodanie pierwszego elementu
-            for (int i = 1; i < Machine.numberOfTasks; i++)
-            {
-                tasks.Add(weights[i].NumberTask); // dodawanie kolejnych elementów
-                Cmax = calculateCMaxWithAcceleration(Machines, tasks); // wyliczanie Cmax
+            // testy dla roznych temperatur poczatkowych
+            // if(numberOfModification == 1){ temperature = 5000;}
+            //else if(numberOfModification == 2){ temperature = 1000;}
+
+            Random rand = new Random(); // obiekt do wykonywanie operacji rand 
+
+            List<int> tasks = new List<int>(); // lista z taskami
+            List<int> helpTasks = new List<int>(); // lista robocza
+            int Cmax = -1; // Cmax podstawowe
+
+            /*if(numberOfModification == 1){
+            // lista zadan w kolejnosci najmniejszy najwiekszy
+            for(int i = 1; i<=Machine.numberOfTasks; i++){
+                tasks.Add(i);
             }
-            Console.WriteLine(Cmax);
-            for (; temperature > 0.0001; temperature *= 0.95)
+            Cmax = calculateCMaxWithAcceleration(Machines, tasks);
+            //koniec chronologiczne listy zadan
+            }*/
+
+            //lista zadan w kolejnosci losowej 
+            List<int> randTasksHelper = new List<int>();
+            for (int i = 1; i <= Machine.numberOfTasks; i++)
             {
-                swapTasks(tasks);
-                helpCmax = calculateCMax(Machines, tasks);
-                if (acceptanceFunction(Cmax, helpCmax, temperature) >= rand.NextDouble())
+                randTasksHelper.Add(i);
+            }
+            for (int i = 1; i <= Machine.numberOfTasks; i++)
+            {
+                int randInt = rand.Next(0, (randTasksHelper.Count));
+                tasks.Add(randTasksHelper[randInt]);
+                randTasksHelper.RemoveAt(randInt);
+            }
+
+
+            Cmax = calculateCMaxWithAcceleration(Machines, tasks);
+            //koniec listy losowej
+
+            /* if(numberOfModification == 2){
+            //poczatek NEH
+              List<TimeWithTask> weights = getWeights(Machines);
+             tasks.Add(weights[0].NumberTask); // dodanie pierwszego elementu
+             for (int i = 1; i < Machine.numberOfTasks; i++)
+             {
+                 tasks.Add(weights[i].NumberTask); // dodawanie kolejnych elementów
+                 Cmax = calculateCMaxWithAcceleration(Machines, tasks); // wyliczanie Cmax
+             }
+             //koniec
+             }*/
+
+            for (int j = 0; j < tasks.Count; j++)
+            {
+                helpTasks.Add(tasks[j]);
+            } // uzupelnienie listy pomocniczej tak jak podstawowa
+            int ipp = 0;
+
+            // testy przy zmianie wspolczynnika chlodzenia
+            //double fi = 0;
+            //if(numberOfModification == 1){ fi = 0.8;}
+            //else if(numberOfModification == 2){ fi = 0.9;}
+            //else if(numberOfModification == 3){ fi = 0.99;}
+
+            // testy z liczba iteracji
+            //int numberOfItterations = 0;
+            //if(numberOfModification == 1){ numberOfItterations = 50000;}
+            //else if(numberOfModification == 2){ numberOfItterations = 10000;}
+
+            for (; ipp < 100000;) // petla wykonywania SW
+            {
+                swapTasks(helpTasks); // zadanie stworznia nowej listy taskow
+
+                // testy z róznymi funkcjami tworzenia nowych list taskow
+                //if(numberOfModification == 1){ swapTasks(helpTasks);}
+                //else if(numberOfModification == 2){ swapNeighboringTasks(helpTasks);}
+                //else if(numberOfModification == 3){ insertTasks(helpTasks);}
+
+
+                helpCmax = calculateCMax(Machines, helpTasks); // wyliczenie nowego Cmax
+                if (Cmax != helpCmax) // warunek do testow
                 {
-                    Cmax = helpCmax;
+                    if (acceptanceFunction(Cmax, helpCmax, temperature) >= rand.NextDouble()) // akceptacja nowej wartosci
+                    {
+                        for (int j = 0; j < tasks.Count; j++) // spelnienie warunku i przypisanie podstawowej tablicy tej pomocnej
+                        {
+                            tasks[j] = helpTasks[j];
+                        }
+                        Cmax = helpCmax;
+
+                    }
+                    else
+                    { // niespelnienie warunku i odwrotne przypisanie tablic
+                        for (int j = 0; j < tasks.Count; j++)
+                        {
+                            helpTasks[j] = tasks[j];
+                        }
+                    }
+                    ipp++; // zwiekszenie iteracji
+                    temperature *= 0.95; // zmiana temperatury
                 }
             }
-            Console.WriteLine(Cmax);
+            Console.WriteLine(Cmax); // wypisanie Cmax
         }
 
     }
