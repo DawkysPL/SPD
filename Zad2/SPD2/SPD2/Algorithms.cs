@@ -562,7 +562,6 @@ namespace SPD2
             if (Cmax <= NewCmax)
             {
                 return Math.Exp((Cmax - NewCmax) / temperature);
-                //return 0;
             }
             else
             {
