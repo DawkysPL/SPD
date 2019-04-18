@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{78127F19-662F-4B6E-B1C8-75143CCBA0C2}</ProjectGuid>
+    <ProjectGuid>{1F282413-7F63-481B-AC5B-9EAB759AB551}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>SPD2</RootNamespace>
-    <AssemblyName>SPD2</AssemblyName>
+    <RootNamespace>Shrage</RootNamespace>
+    <AssemblyName>Shrage</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,13 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GraphVertice.cs" />
     <Compile Include="Algorithms.cs" />
-    <Compile Include="Machine.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResultOfAlgorithm.cs" />
-    <Compile Include="TimeWithTask.cs" />
+    <Compile Include="Task.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
