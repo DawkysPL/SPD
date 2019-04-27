@@ -36,7 +36,37 @@ namespace Shrage
                     k++; 
                 }
             }
-            Console.WriteLine("cos");
+           // Console.WriteLine("cos"); TUTAJ DEBUG POINT ABY SPRAWDZIC CMax
+        }
+
+        public static void AlgorithmShrageWithSegregatedTasks(List<Task> Tasks, List<Task> FinallyTasks)
+        {
+            int t = 0, Cmax = 0, l = 0, q0 = int.MaxValue - 1 ;
+            bool helper = true;
+            List<Task> ReadyTasks = new List<Task>(); //G
+            
+
+            while (ReadyTasks.Count != 0 || Tasks.Count != 0)
+            {
+                while (Tasks.Count != 0 && AreTasksReadyToGo(Tasks, t))
+                {
+                    GetReadyTasksWithModification(Tasks, ReadyTasks, ref t, l, FinallyTasks);
+                    helper = true;
+                }
+
+                if (ReadyTasks.Count == 0)
+                {
+                    t = GetTime(Tasks);
+                    helper = false;
+                }
+
+                if (helper)
+                {
+                    GetFromReadyTasksMaxQTaskWithModification(ReadyTasks, FinallyTasks, ref t, ref Cmax,ref l);
+                }
+            }
+            // Console.WriteLine("cos"); TUTAJ DEBUG POINT ABY SPRAWDZIC CMax
+
         }
 
         public static bool AreTasksReadyToGo (List<Task> Tasks, int t)
@@ -69,6 +99,47 @@ namespace Shrage
             FinallyTasks.Add(ReadyTasks[IndexTask]);
             t += ReadyTasks[IndexTask].P;
             Cmax = Math.Max(Cmax, t + ReadyTasks[IndexTask].Q);
+            ReadyTasks.RemoveAt(IndexTask);
+        }
+
+        public static void GetReadyTasksWithModification(List<Task> Tasks, List<Task> ReadyTasks,ref int t, int l, List<Task> FinallyTask)
+        {
+            int helper = t;
+            int IndexTask = Tasks.FindIndex(x => x.R <= helper);
+            int Qe = Tasks[IndexTask].Q;
+            int Re = Tasks[IndexTask].R;
+            ReadyTasks.Add(Tasks[IndexTask]);
+            Tasks.RemoveAt(IndexTask);
+
+            if(l != 0 && FinallyTask.Count != 0 )
+            {
+                int IndexTaskActual = FinallyTask.FindIndex(x => x.Id == l);
+                if (IndexTaskActual == -1)
+                    return;
+                int Ql = FinallyTask[IndexTaskActual].Q;
+                if (Qe > Ql)
+                {
+                    FinallyTask[IndexTaskActual].P = t - Re;
+                    t = Re;
+                    
+                    if (FinallyTask[IndexTaskActual].P > 0)
+                    {
+                        ReadyTasks.Add(FinallyTask[IndexTaskActual]);
+                        FinallyTask.RemoveAt(IndexTaskActual);
+                    }
+                }
+            } 
+        }
+
+        public static void GetFromReadyTasksMaxQTaskWithModification(List<Task> ReadyTasks, List<Task> FinallyTasks, ref int t, ref int Cmax, ref int l)
+        {
+            int MaxValueQ = ReadyTasks.Max(x => x.Q);
+            int IndexTask = ReadyTasks.FindIndex(x => x.Q == MaxValueQ);
+
+            FinallyTasks.Add(ReadyTasks[IndexTask]);
+            t += ReadyTasks[IndexTask].P;
+            Cmax = Math.Max(Cmax, t + ReadyTasks[IndexTask].Q);
+            l = ReadyTasks[IndexTask].Id;
             ReadyTasks.RemoveAt(IndexTask);
         }
     }

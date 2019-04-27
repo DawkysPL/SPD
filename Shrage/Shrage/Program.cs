@@ -22,7 +22,7 @@ namespace Shrage
             List<Task> Tasks = new List<Task>();
             LoadDataIntoTasks(Tasks, text);
 
-            Algorithms.AlgorithmShrage(Tasks,FinallyTasks);
+            Algorithms.AlgorithmShrageWithSegregatedTasks(Tasks,FinallyTasks);
 
             Console.ReadLine();
         }
