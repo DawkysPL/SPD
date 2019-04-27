@@ -22,7 +22,9 @@ namespace Shrage
             List<Task> Tasks = new List<Task>();
             LoadDataIntoTasks(Tasks, text);
 
-            Algorithms.AlgorithmShrageUseHeap(Tasks,FinallyTasks);
+            Algorithms.AlgorithmShrageUseHeap(Tasks, FinallyTasks);
+
+            Algorithms.AlgorithmShrageWithSegregatedTasksUseHeap(Tasks,FinallyTasks);
             
            
             Console.ReadLine();
