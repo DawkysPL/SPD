@@ -142,5 +142,56 @@ namespace Shrage
             l = ReadyTasks[IndexTask].Id;
             ReadyTasks.RemoveAt(IndexTask);
         }
+
+        public static void AlgorithmShrageUseHeap(List<Task> Tasks, List<Task> FinallyTasks)
+        {
+            //init
+
+            int t = 0, k = 0, Cmax = 0;
+            bool helper = true;
+            LowHeap unassignedTasks = new LowHeap();
+            for(int i = 0; i< Tasks.Count; i++)
+            {
+                unassignedTasks.Insert(Tasks[i]);
+            }
+            MaxHeap ReadyTasks = new MaxHeap(); //G
+
+
+            while (ReadyTasks.HeapSize != 0 || unassignedTasks.HeapSize != 0)
+            {
+                while (unassignedTasks.HeapSize != 0 && unassignedTasks.returnMin().R <= t)
+                {
+                    //GetReadyTasks(Tasks, ReadyTasks, t);
+                    ReadyTasks.Insert(unassignedTasks.returnMin());
+                    unassignedTasks.DeleteMin();
+                    helper = true;
+                }
+
+                if (ReadyTasks.HeapSize == 0)
+                {
+                    t = unassignedTasks.returnMin().R;
+                    helper = false;
+                }
+
+                if (helper)
+                {
+                    GetFromReadyTasksMaxQTask(ReadyTasks, FinallyTasks, ref t, ref Cmax);
+                    k++;
+                }
+            }
+            // Console.WriteLine("cos"); TUTAJ DEBUG POINT ABY SPRAWDZIC CMax
+        }
+
+        public static void GetFromReadyTasksMaxQTask(MaxHeap ReadyTasks, List<Task> FinallyTasks ,ref int t, ref int Cmax)
+        {
+            int MaxValueQ = ReadyTasks.returnMax().Q;
+            //int IndexTask = ReadyTasks.FindIndex(x => x.Q == MaxValueQ);
+
+            FinallyTasks.Add(ReadyTasks.returnMax());
+            t += ReadyTasks.returnMax().P;
+            Cmax = Math.Max(Cmax, t + ReadyTasks.returnMax().Q);
+            ReadyTasks.DeleteMax();
+        }
     }
+
 }

@@ -8,31 +8,32 @@ namespace Shrage
 {
     class MaxHeap
     {
-        private IList<int> data;
+        private IList<Task> data;
         public int HeapSize;
 
         public MaxHeap()
         {
-            data = new List<int>();
+            data = new List<Task>();
             HeapSize = 0;
-            data.Add(0);
+            Task task = new Task();
+            data.Add(task);
         }
 
         public void Swap(int index1, int index2)
         {
-            int help = data[index1];
+            Task help = data[index1];
             data[index1] = data[index2];
             data[index2] = help;
         }
 
-        public void Insert( int element)
+        public void Insert( Task element)
         {
             HeapSize++;
             data.Add(element);
             int index = HeapSize;
             while (index > 1)
             {
-                if (element > data[index / 2]) Swap(index, (index / 2));
+                if (element.Q > data[index / 2].Q) Swap(index, (index / 2));
                 else break;
                 index = index / 2;
             }
@@ -41,20 +42,23 @@ namespace Shrage
         public void ReapairAfterDelete(int index)
         {
             int helpIndex = index;
-            int value = data[index];
-            while(helpIndex*2 <= HeapSize)
+            if (index <= HeapSize)
             {
-                int newIndex;
-                if ((helpIndex * 2 < HeapSize) && (data[helpIndex * 2 + 1] > data[helpIndex * 2]))
-                    newIndex = helpIndex * 2 + 1;
-                else
-                    newIndex = helpIndex * 2;
-                if (value < data[newIndex])
-                    Swap(helpIndex, newIndex);
-                else break;
-                helpIndex = newIndex;
-            }
+                int value = data[index].Q;
 
+                while (helpIndex * 2 <= HeapSize)
+                {
+                    int newIndex;
+                    if ((helpIndex * 2 < HeapSize) && (data[helpIndex * 2 + 1].Q > data[helpIndex * 2].Q))
+                        newIndex = helpIndex * 2 + 1;
+                    else
+                        newIndex = helpIndex * 2;
+                    if (value < data[newIndex].Q)
+                        Swap(helpIndex, newIndex);
+                    else break;
+                    helpIndex = newIndex;
+                }
+            }
         }
 
         public void DeleteMax()
@@ -65,7 +69,7 @@ namespace Shrage
             ReapairAfterDelete(1);
         }
 
-        public int returnMax()
+        public Task returnMax()
         {
             return data[1];
         }
@@ -73,9 +77,9 @@ namespace Shrage
 
         public void Show()
         {
-            foreach (int element in data)
+            foreach (Task element in data)
             {
-                Console.WriteLine(element);
+                Console.WriteLine(element.Q);
             }
         }
     }

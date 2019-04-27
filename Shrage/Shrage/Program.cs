@@ -14,7 +14,7 @@ namespace Shrage
 
         static void Main(string[] args)
         {
-            /*string[] text = File.ReadAllLines(@"test.txt"); //SPD/SPD/BIN/DEBUG
+            string[] text = File.ReadAllLines(@"test.txt"); //SPD/SPD/BIN/DEBUG
             string dataStart = text[0];
             LoadNumbersOfTasksAndMachines(dataStart);
 
@@ -22,18 +22,9 @@ namespace Shrage
             List<Task> Tasks = new List<Task>();
             LoadDataIntoTasks(Tasks, text);
 
-            Algorithms.AlgorithmShrageWithSegregatedTasks(Tasks,FinallyTasks);
-            */
-            LowHeap heap1 = new LowHeap();
-            heap1.Insert(5);
-            heap1.Insert(15);
-            heap1.Insert(25);
-            heap1.Insert(2);
-            heap1.Insert(7);
-            heap1.Insert(3);
-            heap1.Show();
-            heap1.DeleteMin();
-            heap1.Show();
+            Algorithms.AlgorithmShrageUseHeap(Tasks,FinallyTasks);
+            
+           
             Console.ReadLine();
         }
 
