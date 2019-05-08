@@ -268,6 +268,112 @@ namespace Shrage
             ReadyTasks.DeleteMax(); // usuniecie zadania z gotowych
         }
 
-    }
+    
 
+
+public static int AlgorithmShrageWithModification(List<Task> Tasks, List<Task> FinallyTasks, ref int CriticalIndex, ref int InterferenceIndex)
+        {
+            //init
+            int t = 0, k = 0, Cmax = 0;
+            bool helper = true;
+            List<Task> ReadyTasks = new List<Task>(); //G
+            Task InterferenceTask;
+            Task CriticalTask = new Task();
+
+            while (ReadyTasks.Count != 0 || Tasks.Count != 0)
+            {
+                while (Tasks.Count != 0 && AreTasksReadyToGo(Tasks, t))
+                {
+                    int IndexTask = Tasks.FindIndex(x => x.R <= t);
+
+                    ReadyTasks.Add(Tasks[IndexTask]);
+                    Tasks.RemoveAt(IndexTask);
+                    helper = true;
+                }
+
+                if (ReadyTasks.Count == 0)
+                {
+                    t = GetTime(Tasks);
+                    helper = false;
+                }
+
+                if (helper)
+                {
+                    int MaxValueQ = ReadyTasks.Max(x => x.Q);
+                    int IndexTask = ReadyTasks.FindIndex(x => x.Q == MaxValueQ);
+
+                     FinallyTasks.Add(ReadyTasks[IndexTask]);
+                     t += ReadyTasks[IndexTask].P;
+                    if(t + ReadyTasks[IndexTask].Q>Cmax){
+                    Cmax = t + ReadyTasks[IndexTask].Q;
+                    CriticalTask = ReadyTasks[IndexTask];
+                        }
+                     ReadyTasks.RemoveAt(IndexTask);
+                    k++;
+                }
+                
+               
+            }
+
+                int min_q = 999;
+                foreach(Task task in FinallyTasks){
+                min_q = Math.Min(min_q, task.Q);
+                }
+                
+                if(min_q == CriticalTask.Q){
+                InterferenceIndex = -1;
+                }
+                else{
+                    if(FinallyTasks.Count>0){
+                    InterferenceTask = FinallyTasks[0];
+                    for(int i = 0; i<=FinallyTasks.IndexOf(CriticalTask); i++){
+                        for(int j = FinallyTasks.IndexOf(InterferenceTask)+1; j<= FinallyTasks.IndexOf(CriticalTask); j++){
+                            if(FinallyTasks[j].Q< CriticalTask.Q){
+                                InterferenceTask = FinallyTasks[j];
+                                i = j;
+                                break;
+}
+}
+}
+                    InterferenceIndex = FinallyTasks.IndexOf(InterferenceTask);
+                        CriticalIndex = FinallyTasks.IndexOf(CriticalTask);
+}
+
+                }
+
+
+            // Console.WriteLine("cos"); TUTAJ DEBUG POINT ABY SPRAWDZIC CMax
+            return Cmax;
+        }
+
+        public static int Schrage(List<Task> Tasks, List<Task> FinallyTasks){
+
+            int Cop = 999999999, Cmax = 0;
+            int CriticalIndex = 0;
+            int InterferenceIndex = 0;
+            List<Task> newTasks = new List<Task>();
+            Cmax = AlgorithmShrageWithModification(Tasks, FinallyTasks, ref CriticalIndex, ref InterferenceIndex);
+            int iterrator = FinallyTasks.Count;
+            for(int i = 0; i< iterrator; i++){
+                newTasks.RemoveAll(x => x.R> -1);
+                for(int j = 0; j<iterrator; j++){
+                newTasks.Add(FinallyTasks[j]);
+                    }
+                Cmax = AlgorithmShrageWithModification(newTasks, FinallyTasks,ref CriticalIndex, ref InterferenceIndex);
+                if(Cmax<Cop){
+                    Cop = Cmax;
+}
+                if(InterferenceIndex == -1){
+                    break;
+}
+                else{
+                    FinallyTasks[InterferenceIndex].R = FinallyTasks[CriticalIndex].R;
+}
+}
+            return Cop;
+}
+
+
+
+    }
 }
