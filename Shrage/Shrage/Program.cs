@@ -24,9 +24,9 @@ namespace Shrage
             Task elo = new Task();
             int ala = 0;
 
-            Algorithms.Schrage(Tasks, FinallyTasks);
+           //Algorithms.Schrage(Tasks, FinallyTasks);
 
-            Algorithms.AlgorithmShrageWithSegregatedTasksUseHeap(Tasks,FinallyTasks);
+           Algorithms.AlgorithmShrage(Tasks,FinallyTasks);
             
            
             Console.ReadLine();
