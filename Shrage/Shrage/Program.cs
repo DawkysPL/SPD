@@ -22,7 +22,9 @@ namespace Shrage
             List<Task> Tasks = new List<Task>();
             LoadDataIntoTasks(Tasks, text);
 
-            Algorithms.AlgorithmShrageWithSegregatedTasks(Tasks,FinallyTasks);
+
+            CarlierParametrs obiect = new CarlierParametrs();
+            Algorithms.Carlier(Tasks, FinallyTasks, obiect);
 
             Console.ReadLine();
         }

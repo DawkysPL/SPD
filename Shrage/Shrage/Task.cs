@@ -12,5 +12,6 @@ namespace Shrage
         public int R { get; set; }
         public int P { get; set; }
         public int Q { get; set; }
+        public int Time { get; set; }
     }
 }

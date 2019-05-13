@@ -8,7 +8,187 @@ namespace Shrage
 {
     class Algorithms
     {
-        public static void AlgorithmShrage(List<Task> Tasks, List<Task> FinallyTasks)
+        public static int Carlier(List<Task> Tasks, List<Task> FinallyTasks, CarlierParametrs obiect)
+        {
+            int i = 0;
+            obiect.U = AlgorithmShrage(Tasks, FinallyTasks);
+
+            if(obiect.U < obiect.UB) 
+            {
+                obiect.UB = obiect.U;
+                obiect.OptimalFinallyTasks = FinallyTasks;
+            }
+
+            find_B(obiect);
+            find_A(obiect);
+            find_C(obiect);
+
+            if (obiect.c == -1)
+            {
+                return obiect.U; // znaczy ze zwykly Shrage znalazl rozwiazanie optymalne
+            }
+
+            for(i = obiect.c + 1; i <= obiect.b; i++)
+            {
+                obiect.R_prim = Math.Min(obiect.R_prim, obiect.OptimalFinallyTasks[i].R);
+                obiect.P_prim += obiect.OptimalFinallyTasks[i].P;
+                obiect.Q_prim = Math.Min(obiect.Q_prim, obiect.OptimalFinallyTasks[i].Q);
+            }
+
+            if(obiect.R_mem == -2)
+            {
+                obiect.R_mem = obiect.OptimalFinallyTasks[obiect.c].R;
+                obiect.NR_mem = obiect.OptimalFinallyTasks[obiect.c].Id;
+            }
+
+            obiect.OptimalFinallyTasks[obiect.c].R = Math.Max(obiect.OptimalFinallyTasks[obiect.c].R, obiect.R_prim + obiect.P_prim);
+
+            //nie przemyslany kod i takie cos musi byc ;c
+            List<Task> CopyTable = new List<Task>();
+            List<Task> CopyTable1 = new List<Task>();
+            foreach(var element in obiect.OptimalFinallyTasks)
+            {
+                CopyTable1.Add(element);
+            }
+
+
+            obiect.LB = AlgorithmShrageWithSegregatedTasks(CopyTable1, CopyTable);
+
+            List<Task> CopyTable2 = new List<Task>();
+            List<Task> CopyTable3 = new List<Task>();
+            foreach (var element in obiect.OptimalFinallyTasks)
+            {
+                CopyTable3.Add(element);
+            }
+
+            if (obiect.LB < obiect.UB)
+            {
+                obiect.UB = Carlier(CopyTable3, CopyTable2, obiect);
+            }
+
+            foreach(var element in obiect.OptimalFinallyTasks)
+            {
+                if(obiect.NR_mem == element.Id)
+                {
+                    element.R = obiect.R_mem;
+                }
+            }
+            obiect.R_mem = -2;
+
+            
+            if(obiect.Q_mem == -2)
+            {
+                obiect.NR_mem = obiect.OptimalFinallyTasks[obiect.c].Id;
+                obiect.Q_mem = obiect.OptimalFinallyTasks[obiect.c].Q;
+            }
+
+            obiect.OptimalFinallyTasks[obiect.c].Q = Math.Max(obiect.OptimalFinallyTasks[obiect.c].Q, obiect.Q_prim + obiect.P_prim);
+
+            //nie przemyslany kod i takie cos musi byc ;c
+            List<Task> CopyTable4 = new List<Task>();
+            List<Task> CopyTable5 = new List<Task>();
+            foreach (var element in obiect.OptimalFinallyTasks)
+            {
+                CopyTable5.Add(element);
+            }
+
+            obiect.LB = AlgorithmShrageWithSegregatedTasks(CopyTable5, CopyTable4);
+
+            List<Task> CopyTable6 = new List<Task>();
+            List<Task> CopyTable7 = new List<Task>();
+            foreach (var element in obiect.OptimalFinallyTasks)
+            {
+                CopyTable7.Add(element);
+            }
+
+            if (obiect.LB < obiect.UB)
+            {
+                obiect.UB = Carlier(CopyTable7, CopyTable6, obiect);
+            }
+
+            foreach (var element in obiect.OptimalFinallyTasks)
+            {
+                if (obiect.NR_mem == element.Id)
+                {
+                    element.Q = obiect.Q_mem;
+                }
+            }
+            obiect.Q_mem = -2;
+            
+            return obiect.U;
+        }
+
+       public static void find_B(CarlierParametrs obiect)
+       {
+           for(int i = obiect.OptimalFinallyTasks.Count - 1; i > 0; i--)
+            {
+                if(obiect.U == obiect.OptimalFinallyTasks[i].Time + obiect.OptimalFinallyTasks[i].Q)
+                {
+                    obiect.b = i;
+                    break;
+                }
+            }
+       }
+
+       public static void find_A(CarlierParametrs obiect)
+       {
+            int suma, i;
+            int a = 0;
+            int b = obiect.b;
+           
+            for(; a < b; a++)
+            {
+                suma = 0;
+                for(i = a; i <= b; i++)
+                {
+                    suma += obiect.OptimalFinallyTasks[i].P;
+                }
+
+                if(obiect.U == obiect.OptimalFinallyTasks[a].R + obiect.OptimalFinallyTasks[b].Q + suma)
+                {
+                    obiect.a = a;
+                    return;
+                }
+            }
+            obiect.a = a;
+            return;
+       }
+
+        public static void find_C(CarlierParametrs obiect)
+        {
+            int c = obiect.c, i;
+
+            for(i = obiect.b; i >= obiect.a; i--)
+            {
+                if(obiect.OptimalFinallyTasks[i].Q < obiect.OptimalFinallyTasks[obiect.b].Q)
+                {
+                    c = i;
+                    break;
+                }
+            }
+            obiect.c = c;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public static int AlgorithmShrage(List<Task> Tasks, List<Task> FinallyTasks)
         {
             //init
             int t = 0, k = 0, Cmax = 0;
@@ -36,12 +216,13 @@ namespace Shrage
                     k++; 
                 }
             }
+            return Cmax;
            // Console.WriteLine("cos"); TUTAJ DEBUG POINT ABY SPRAWDZIC CMax
         }
 
-        public static void AlgorithmShrageWithSegregatedTasks(List<Task> Tasks, List<Task> FinallyTasks)
+        public static int AlgorithmShrageWithSegregatedTasks(List<Task> Tasks, List<Task> FinallyTasks)
         {
-            int t = 0, Cmax = 0, l = 0, q0 = int.MaxValue - 1 ;
+            int t = 0, Cmax = 0, l = 0;
             bool helper = true;
             List<Task> ReadyTasks = new List<Task>(); //G
             
@@ -65,6 +246,7 @@ namespace Shrage
                     GetFromReadyTasksMaxQTaskWithModification(ReadyTasks, FinallyTasks, ref t, ref Cmax,ref l);
                 }
             }
+            return Cmax;
             // Console.WriteLine("cos"); TUTAJ DEBUG POINT ABY SPRAWDZIC CMax
 
         }
@@ -96,8 +278,10 @@ namespace Shrage
             int MaxValueQ = ReadyTasks.Max(x => x.Q);
             int IndexTask = ReadyTasks.FindIndex(x => x.Q == MaxValueQ);
 
-            FinallyTasks.Add(ReadyTasks[IndexTask]);
             t += ReadyTasks[IndexTask].P;
+            ReadyTasks[IndexTask].Time = t;
+            FinallyTasks.Add(ReadyTasks[IndexTask]);
+            
             Cmax = Math.Max(Cmax, t + ReadyTasks[IndexTask].Q);
             ReadyTasks.RemoveAt(IndexTask);
         }
