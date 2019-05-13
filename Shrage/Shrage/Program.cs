@@ -21,14 +21,9 @@ namespace Shrage
             List<Task> FinallyTasks = new List<Task>();
             List<Task> Tasks = new List<Task>();
             LoadDataIntoTasks(Tasks, text);
-            Task elo = new Task();
-            int ala = 0;
 
-           //Algorithms.Schrage(Tasks, FinallyTasks);
+            Algorithms.AlgorithmShrageWithSegregatedTasks(Tasks,FinallyTasks);
 
-           Algorithms.AlgorithmShrage(Tasks,FinallyTasks);
-            
-           
             Console.ReadLine();
         }
 
