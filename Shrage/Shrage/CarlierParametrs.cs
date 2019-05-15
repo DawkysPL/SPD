@@ -20,6 +20,9 @@ namespace Shrage
             R_prim = int.MaxValue;
             P_prim = 0;
             Q_prim = int.MaxValue;
+            R_prim_with_j = int.MaxValue;
+            P_prim_with_j = 0;
+            Q_prim_with_j = int.MaxValue;
             R_mem = -2;
             Q_mem = -2;
             NR_mem = 0;
@@ -34,6 +37,9 @@ namespace Shrage
         public int R_prim { get; set; }
         public int P_prim { get; set; }
         public int Q_prim { get; set; }
+        public int R_prim_with_j { get; set; }
+        public int P_prim_with_j { get; set; }
+        public int Q_prim_with_j { get; set; }
         public int R_mem { get; set; }
         public int Q_mem { get; set; }
         public int NR_mem { get; set; }

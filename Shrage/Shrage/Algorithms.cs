@@ -21,6 +21,7 @@ namespace Shrage
             {
                 obiect.UB = obiect.U;
                 obiect.OptimalFinallyTasks = FinallyTasks.ToList();
+
             }
 
             //KROK 3
@@ -39,6 +40,13 @@ namespace Shrage
                 obiect.R_prim = Math.Min(obiect.R_prim, obiect.OptimalFinallyTasks[i].R);
                 obiect.P_prim += obiect.OptimalFinallyTasks[i].P;
                 obiect.Q_prim = Math.Min(obiect.Q_prim, obiect.OptimalFinallyTasks[i].Q);
+            }
+
+            for (i = obiect.c; i <= obiect.b; i++)
+            {
+                obiect.R_prim_with_j = Math.Min(obiect.R_prim_with_j, obiect.OptimalFinallyTasks[i].R);
+                obiect.P_prim_with_j += obiect.OptimalFinallyTasks[i].P;
+                obiect.Q_prim_with_j = Math.Min(obiect.Q_prim_with_j, obiect.OptimalFinallyTasks[i].Q);
             }
 
             //KROK 6
@@ -69,6 +77,8 @@ namespace Shrage
 
 
             obiect.LB = AlgorithmShrageWithSegregatedTasksUseHeap(CopyTable1, CopyTable);
+            obiect.LB = Math.Max(obiect.LB, (obiect.P_prim + obiect.Q_prim + obiect.R_prim));
+            obiect.LB = Math.Max(obiect.LB, (obiect.P_prim_with_j + obiect.Q_prim_with_j + obiect.R_prim_with_j));
 
             // KROK 8
             List<Task> CopyTable2 = new List<Task>();
@@ -89,10 +99,11 @@ namespace Shrage
             {
                 //KROK 9
                 CarlierParametrs obiectTestowy = new CarlierParametrs();
-                obiectTestowy.UB = obiect.UB;
+                //obiectTestowy.UB = obiect.UB;
                 obiect.UB = Carlier(CopyTable3, CopyTable2, obiectTestowy);
-                if(obiect.U > obiectTestowy.U) obiect.U = obiectTestowy.U;
-               // obiect.OptimalFinallyTasks = obiectTestowy.OptimalFinallyTasks.ToList();
+                if(obiect.U > obiectTestowy.U) {obiect.U = obiectTestowy.U;
+               obiect.OptimalFinallyTasks = obiectTestowy.OptimalFinallyTasks.ToList();}
+
             }
 
             //KROK 10
@@ -129,6 +140,8 @@ namespace Shrage
                 CopyTable5.Add(taskTest);
             }
             obiect.LB = AlgorithmShrageWithSegregatedTasksUseHeap(CopyTable5, CopyTable4);
+            obiect.LB = Math.Max(obiect.LB, (obiect.P_prim + obiect.Q_prim + obiect.R_prim));
+            obiect.LB = Math.Max(obiect.LB, (obiect.P_prim_with_j + obiect.Q_prim_with_j + obiect.R_prim_with_j));
 
             //KROK 13
             List<Task> CopyTable6 = new List<Task>();
@@ -148,10 +161,10 @@ namespace Shrage
             {
                 //KROK 14
                 CarlierParametrs obiectTestowy1 = new CarlierParametrs();
-                obiectTestowy1.UB = obiect.UB;
+                //obiectTestowy1.UB = obiect.UB;
                 obiect.UB = Carlier(CopyTable7, CopyTable6, obiectTestowy1);
-                if(obiect.U > obiectTestowy1.U) obiect.U = obiectTestowy1.U;
-                //obiect.OptimalFinallyTasks = obiectTestowy1.OptimalFinallyTasks.ToList();
+                if(obiect.U > obiectTestowy1.U) {obiect.U = obiectTestowy1.U;
+                obiect.OptimalFinallyTasks = obiectTestowy1.OptimalFinallyTasks.ToList();}
             }
 
             // KROK 15
@@ -165,6 +178,7 @@ namespace Shrage
             obiect.Q_mem = -2;
 
             int a = obiect.UB;
+            //Console.WriteLine(obiect.U);
             return obiect.U;
         }
 
@@ -186,7 +200,7 @@ namespace Shrage
             int a = 0;
             int b = obiect.b;
 
-            for (; a < b; a++)
+            for (; a < obiect.OptimalFinallyTasks.Count; a++) //change
             {
                 suma = 0;
                 for (i = a; i <= b; i++)
@@ -208,7 +222,7 @@ namespace Shrage
         {
             int c = obiect.c, i;
 
-            for (i = obiect.b; i > obiect.a; i--)
+            for (i = obiect.b; i >= obiect.a; i--) //change
             {
                 if (obiect.OptimalFinallyTasks[i].Q < obiect.OptimalFinallyTasks[obiect.b].Q)
                 {
