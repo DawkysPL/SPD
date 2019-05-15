@@ -10,7 +10,7 @@ namespace Shrage
     {
         public CarlierParametrs()
         {
-            OptimalFinallyTasks  = new List<Task>();
+            OptimalFinallyTasks = new List<Task>();
             a = 0;
             b = 0;
             c = -1;
@@ -22,20 +22,20 @@ namespace Shrage
             Q_prim = int.MaxValue;
             R_mem = -2;
             Q_mem = -2;
-            NR_mem = 0; 
+            NR_mem = 0;
         }
         public List<Task> OptimalFinallyTasks;
-        public int a { get;  set; }
-        public int b { get;  set; }
-        public int c { get;  set; }
-        public int U { get;  set; }
-        public int UB { get;  set; }
-        public int LB { get;  set; }
-        public int R_prim { get;  set; }
-        public int P_prim { get;  set; }
-        public int Q_prim { get;  set; }
-        public int R_mem { get;  set; }
-        public int Q_mem { get;  set; }
-        public int NR_mem { get;  set; }
+        public int a { get; set; }
+        public int b { get; set; }
+        public int c { get; set; }
+        public int U { get; set; }
+        public int UB { get; set; }
+        public int LB { get; set; }
+        public int R_prim { get; set; }
+        public int P_prim { get; set; }
+        public int Q_prim { get; set; }
+        public int R_mem { get; set; }
+        public int Q_mem { get; set; }
+        public int NR_mem { get; set; }
     }
 }
