@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+
+using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Shrage
@@ -14,18 +17,83 @@ namespace Shrage
 
         static void Main(string[] args)
         {
-            string[] text = File.ReadAllLines(@"test.txt"); //SPD/SPD/BIN/DEBUG
-            string dataStart = text[0];
-            LoadNumbersOfTasksAndMachines(dataStart);
+            string[] text; 
+            string [] names = {"test1.txt", "test2.txt", "test3.txt", "test4.txt", "test5.txt", "test50.txt", "test100.txt", "test200.txt"};
+            string dataStart;
 
+            Stopwatch stopWatch = new Stopwatch();
+            for(int i = 0; i < names.Length; i++){
+            text = File.ReadAllLines(@names[i]); //SPD/SPD/BIN/DEBUG
+            dataStart= text[0];
+            LoadNumbersOfTasksAndMachines(dataStart);
             List<Task> FinallyTasks = new List<Task>();
             List<Task> Tasks = new List<Task>();
             LoadDataIntoTasks(Tasks, text);
-
             CarlierParametrs obiect = new CarlierParametrs();
-            Console.WriteLine(Algorithms.Carlier(Tasks, FinallyTasks, obiect));
-            
-
+                  stopWatch.Reset();
+            stopWatch.Start();
+            Console.WriteLine(Algorithms.CarlierWildLeft(Tasks, FinallyTasks, obiect));
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:000}",
+            ts.Hours, ts.Minutes, ts.Seconds,
+            ts.Milliseconds);
+            Console.WriteLine("Czas pracy algorytmu WildLeft: " + elapsedTime);
+            }
+            for(int i = 0; i < names.Length; i++){
+            text = File.ReadAllLines(@names[i]); //SPD/SPD/BIN/DEBUG
+            dataStart= text[0];
+            LoadNumbersOfTasksAndMachines(dataStart);
+            List<Task> FinallyTasks = new List<Task>();
+            List<Task> Tasks = new List<Task>();
+            LoadDataIntoTasks(Tasks, text);
+            CarlierParametrs obiect = new CarlierParametrs();
+                stopWatch.Reset();
+            stopWatch.Start();
+            Console.WriteLine(Algorithms.CarlierDeepLeft(Tasks, FinallyTasks, obiect));
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:000}",
+            ts.Hours, ts.Minutes, ts.Seconds,
+            ts.Milliseconds);
+            Console.WriteLine("Czas pracy algorytmu DeepLeft: " + elapsedTime);
+            }
+            for(int i = 0; i < names.Length; i++){
+            text = File.ReadAllLines(@names[i]); //SPD/SPD/BIN/DEBUG
+            dataStart= text[0];
+            LoadNumbersOfTasksAndMachines(dataStart);
+            List<Task> FinallyTasks = new List<Task>();
+            List<Task> Tasks = new List<Task>();
+            LoadDataIntoTasks(Tasks, text);
+            CarlierParametrs obiect = new CarlierParametrs();
+                  stopWatch.Reset();
+                stopWatch.Start();
+            Console.WriteLine(Algorithms.CarlierGreedy(Tasks, FinallyTasks, obiect));
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:000}",
+            ts.Hours, ts.Minutes, ts.Seconds,
+            ts.Milliseconds);
+            Console.WriteLine("Czas pracy algorytmu Greedy: " + elapsedTime);
+            }
+            for(int i = 0; i < names.Length; i++){
+            text = File.ReadAllLines(@names[i]); //SPD/SPD/BIN/DEBUG
+            dataStart= text[0];
+            LoadNumbersOfTasksAndMachines(dataStart);
+            List<Task> FinallyTasks = new List<Task>();
+            List<Task> Tasks = new List<Task>();
+            LoadDataIntoTasks(Tasks, text);
+            CarlierParametrs obiect = new CarlierParametrs();
+                  stopWatch.Reset();
+            stopWatch.Start();
+            Console.WriteLine(Algorithms.CarlierOnlyLeft(Tasks, FinallyTasks, obiect));
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:000}",
+            ts.Hours, ts.Minutes, ts.Seconds,
+            ts.Milliseconds );
+            Console.WriteLine("Czas pracy algorytmu OnlyLeft: " + elapsedTime);
+            }
             Console.ReadLine();
         }
 
