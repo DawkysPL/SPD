@@ -21,6 +21,13 @@ namespace Shrage
             string [] names = {"test1.txt", "test2.txt", "test3.txt", "test4.txt", "test5.txt", "test50.txt", "test100.txt", "test200.txt"};
             string dataStart;
 
+           //start = Environment.TickCount & Int32.MaxValue;
+            //Task<int> x = Algorithms.CarlierAsync(Tasks, FinallyTasks, obiect);
+            //stop = Environment.TickCount & Int32.MaxValue;
+
+            //Console.WriteLine($"{x.Result}  |   {stop - start} ");
+
+
             Stopwatch stopWatch = new Stopwatch();
             for(int i = 0; i < names.Length; i++){
             text = File.ReadAllLines(@names[i]); //SPD/SPD/BIN/DEBUG

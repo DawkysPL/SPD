@@ -1115,7 +1115,188 @@ namespace Shrage
         return Cmax;
 }
 
+        public async static Task<int> CarlierAsync(List<Task> Tasks, List<Task> FinallyTasks, CarlierParametrs obiect)
+        {
+            int i = 0;
+            //KROK 1
+            obiect.U = AlgorithmShrage(Tasks, FinallyTasks);
 
+            //KROK 2
+            if (obiect.U < obiect.UB)
+            {
+                obiect.UB = obiect.U;
+                obiect.OptimalFinallyTasks = FinallyTasks.ToList();
+
+            }
+
+            //KROK 3
+            find_B(obiect);
+            find_A(obiect);
+            find_C(obiect);
+
+            //KROK 4
+            if (obiect.c == -1)
+            {
+                return obiect.U; // znaczy ze zwykly Shrage znalazl rozwiazanie optymalne
+            }
+            //KROK 5
+            for (i = obiect.c + 1; i <= obiect.b; i++) // wyznaczanie RPQ dla bloku K{c+1;b}
+            {
+                obiect.R_prim = Math.Min(obiect.R_prim, obiect.OptimalFinallyTasks[i].R);
+                obiect.P_prim += obiect.OptimalFinallyTasks[i].P;
+                obiect.Q_prim = Math.Min(obiect.Q_prim, obiect.OptimalFinallyTasks[i].Q);
+            }
+
+            for (i = obiect.c; i <= obiect.b; i++) // wyznaczanie RPQ dla bloku K{c;b}
+            {
+                obiect.R_prim_with_j = Math.Min(obiect.R_prim_with_j, obiect.OptimalFinallyTasks[i].R);
+                obiect.P_prim_with_j += obiect.OptimalFinallyTasks[i].P;
+                obiect.Q_prim_with_j = Math.Min(obiect.Q_prim_with_j, obiect.OptimalFinallyTasks[i].Q);
+            }
+
+            //KROK 6
+            if (obiect.R_mem == -2)
+            {
+                obiect.R_mem = obiect.OptimalFinallyTasks[obiect.c].R;
+                obiect.NR_mem = obiect.OptimalFinallyTasks[obiect.c].Id;
+            }
+            obiect.OptimalFinallyTasks[obiect.c].R = Math.Max(obiect.OptimalFinallyTasks[obiect.c].R, obiect.R_prim + obiect.P_prim);
+
+            //KROK 7
+            //nie przemyslany kod i takie cos musi byc ;c
+            List<Task> CopyTable = new List<Task>();
+            List<Task> CopyTable1 = new List<Task>();
+            List<Task> CopyTable77 = new List<Task>();
+            foreach (var element in obiect.OptimalFinallyTasks)
+            {
+                Task taskTest = new Task()
+                {
+                    Id = element.Id,
+                    R = element.R,
+                    P = element.P,
+                    Q = element.Q,
+                    Time = element.Time
+                };
+                CopyTable1.Add(taskTest);
+            }
+            //CopyTable1 = obiect.OptimalFinallyTasks.ToList();
+
+
+            obiect.LB = AlgorithmShrageWithSegregatedTasksUseHeap(CopyTable1, CopyTable);
+            obiect.LB = Math.Max(obiect.LB, (obiect.P_prim + obiect.Q_prim + obiect.R_prim));
+            obiect.LB = Math.Max(obiect.LB, (obiect.P_prim_with_j + obiect.Q_prim_with_j + obiect.R_prim_with_j));
+
+            // KROK 8
+            List<Task> CopyTable2 = new List<Task>();
+            List<Task> CopyTable3 = new List<Task>();
+            foreach (var element in obiect.OptimalFinallyTasks)
+            {
+                Task taskTest = new Task()
+                {
+                    Id = element.Id,
+                    R = element.R,
+                    P = element.P,
+                    Q = element.Q,
+                    Time = element.Time
+                };
+                CopyTable3.Add(taskTest);
+            }
+
+            if (obiect.LB < obiect.UB)
+            {
+                //KROK 9
+                CarlierParametrs obiectTestowy = new CarlierParametrs();
+                //obiectTestowy.UB = obiect.UB;
+                obiect.UB = await CarlierAsync(CopyTable3, CopyTable2, obiectTestowy);
+                if (obiect.U > obiectTestowy.U)
+                {
+                    obiect.U = obiectTestowy.U;
+                    obiect.OptimalFinallyTasks = obiectTestowy.OptimalFinallyTasks.ToList();
+                }
+
+            }
+
+            //KROK 10
+            foreach (var element in obiect.OptimalFinallyTasks)
+            {
+                if (obiect.NR_mem == element.Id)
+                {
+                    element.R = obiect.R_mem;
+                }
+            }
+            obiect.R_mem = -2;
+
+            //KROK 11
+            if (obiect.Q_mem == -2)
+            {
+                obiect.NR_mem = obiect.OptimalFinallyTasks[obiect.c].Id;
+                obiect.Q_mem = obiect.OptimalFinallyTasks[obiect.c].Q;
+            }
+            obiect.OptimalFinallyTasks[obiect.c].Q = Math.Max(obiect.OptimalFinallyTasks[obiect.c].Q, obiect.Q_prim + obiect.P_prim);
+
+            // KROK 12
+            //nie przemyslany kod i takie cos musi byc ;c
+            List<Task> CopyTable4 = new List<Task>();
+            List<Task> CopyTable5 = new List<Task>();
+            foreach (var element in obiect.OptimalFinallyTasks)
+            {
+                Task taskTest = new Task()
+                {
+                    Id = element.Id,
+                    R = element.R,
+                    P = element.P,
+                    Q = element.Q,
+                    Time = element.Time
+                };
+                CopyTable5.Add(taskTest);
+            }
+            obiect.LB = AlgorithmShrageWithSegregatedTasksUseHeap(CopyTable5, CopyTable4);
+            obiect.LB = Math.Max(obiect.LB, (obiect.P_prim + obiect.Q_prim + obiect.R_prim));
+            obiect.LB = Math.Max(obiect.LB, (obiect.P_prim_with_j + obiect.Q_prim_with_j + obiect.R_prim_with_j));
+
+            //KROK 13
+            List<Task> CopyTable6 = new List<Task>();
+            List<Task> CopyTable7 = new List<Task>();
+            foreach (var element in obiect.OptimalFinallyTasks)
+            {
+                Task taskTest = new Task()
+                {
+                    Id = element.Id,
+                    R = element.R,
+                    P = element.P,
+                    Q = element.Q,
+                    Time = element.Time
+                };
+                CopyTable7.Add(taskTest);
+            }
+
+            if (obiect.LB < obiect.UB)
+            {
+                //KROK 14
+                CarlierParametrs obiectTestowy1 = new CarlierParametrs();
+                //obiectTestowy1.UB = obiect.UB;
+                obiect.UB = await CarlierAsync(CopyTable7, CopyTable6, obiectTestowy1);
+                if (obiect.U > obiectTestowy1.U)
+                {
+                    obiect.U = obiectTestowy1.U;
+                    obiect.OptimalFinallyTasks = obiectTestowy1.OptimalFinallyTasks.ToList();
+                }
+            }
+
+            // KROK 15
+            foreach (var element in obiect.OptimalFinallyTasks)
+            {
+                if (obiect.NR_mem == element.Id)
+                {
+                    element.Q = obiect.Q_mem;
+                }
+            }
+            obiect.Q_mem = -2;
+
+            int a = obiect.UB;
+            //Console.WriteLine(obiect.U);
+            return obiect.U;
+        }
 
 
 
